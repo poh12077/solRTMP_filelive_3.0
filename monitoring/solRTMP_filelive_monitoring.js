@@ -208,17 +208,17 @@ let parser_excel = (json, conf, sheet) => {
 }
 
 //time = '2012-05-17 10:20:30'
-let id_finder_excel = (schedule, conf, channel, running_video, time, ) => {
+let id_finder_excel = (schedule, conf, channel, running_video ) => {
     try {
         let current_time;
         channel = channel.toString();
         let sheet_num = 'sheet_' + channel;
-        if (time === undefined) {
+        if (conf.current_time === undefined) {
             //current time
             current_time = Math.floor(new Date().getTime());
         } else {
             //input time
-            current_time = Math.floor(new Date(time).getTime());
+            current_time = Math.floor(new Date(conf.current_time).getTime());
         }
         if (isNaN(current_time)) {
             throw new Error('[error] input time');
@@ -420,7 +420,7 @@ let module_excel = (running_video, conf) => {
                 json = samsung_smartTV(json);
             }
             schedule.push(parser_excel(json, conf, sheet));
-            id_finder_excel(schedule[sheet], conf, sheet, running_video, conf.current_time); //current time = '2022-04-01 00:00:01'
+            id_finder_excel(schedule[sheet], conf, sheet, running_video); //current time = '2022-04-01 00:00:01'
             // setInterval(
             //     () => {
             //       id_finder_excel(schedule[sheet], conf, sheet);
@@ -505,9 +505,9 @@ let channel_map = (schedule, log, running_video) => {
         }
     }
 
-    for (let x in running_video.excel.samsung_korea) {
-        running_video.excel.samsung_korea[mapping_table[x]] = running_video.excel.samsung_korea[x];
-        delete running_video.excel.samsung_korea[x];
+    for (let sheet in running_video.excel.samsung_korea) {
+        running_video.excel.samsung_korea[mapping_table[sheet]] = running_video.excel.samsung_korea[sheet];
+        delete running_video.excel.samsung_korea[sheet];
     }
 
     // return mapping_table;
