@@ -80,9 +80,12 @@ let read_conf = (file_name) => {
         conf.excel = conf_file.excel;
         conf.log = conf_file.log;
         conf.option = conf_file.option;
-        conf.start_date = fetch_unix_timestamp(conf_file.start_date);
+        conf.start_date = conf_file.start_date;
         conf.current_time = conf_file.current_time;
        // conf.current_time = fetch_unix_timestamp(conf_file.current_time);
+        for(let sheet in conf.start_date){
+            conf.start_date[sheet] = fetch_unix_timestamp(conf.start_date[sheet]);
+        }
 
         conf.ad_duration.pluto = conf_file.ad_duration.pluto;
         conf.ad_duration.samsung_korea = conf_file.ad_duration.samsung_korea;
@@ -93,7 +96,7 @@ let read_conf = (file_name) => {
         conf.ad_name.samsung_korea = conf_file.ad_name.samsung_korea;
         conf.ad_name.samsung_northern_america = conf_file.ad_name.samsung_northern_america;
 
-        if (conf.option < 1 || conf.option > 4 || conf.start_date <= 0 || conf.current_time <= 0 || conf.ad_duration.pluto <= 0
+        if (conf.option < 1 || conf.option > 4 || conf.current_time <= 0 || conf.ad_duration.pluto <= 0
             || conf.ad_duration.samsung_korea <= 0 || conf.ad_duration.samsung_northern_america <= 0 || conf.ad_interval.samsung_korea <= 0
             || conf.ad_interval.samsung_northern_america <= 0 || conf.ad_name.pluto.length <=0 || conf.ad_name.samsung_korea.length <= 0 
             || conf.ad_name.samsung_northern_america.length <=0){
@@ -128,12 +131,13 @@ let read_excel = (excel, conf, i) => {
     }
 }
 
-let parser_excel = (json, conf) => {
+let parser_excel = (json, conf, sheet) => {
     try {
         let schedule = [];
-        let end_time = conf.start_date;
+        let sheet_num = 'sheet_' + sheet.toString();
+        let end_time = conf.start_date[sheet_num];
         let ad_list = [];
-        let m = conf.start_date;
+        let m = conf.start_date[sheet_num];
 
         for (let i = 0; i < json.length; i++) {
             if (json[i].id !== undefined) {
@@ -204,10 +208,11 @@ let parser_excel = (json, conf) => {
 }
 
 //time = '2012-05-17 10:20:30'
-let id_finder_excel = (schedule, conf, channel, running_video, time) => {
+let id_finder_excel = (schedule, conf, channel, running_video, time, ) => {
     try {
         let current_time;
         channel = channel.toString();
+        let sheet_num = 'sheet_' + channel;
         if (time === undefined) {
             //current time
             current_time = Math.floor(new Date().getTime());
@@ -237,7 +242,7 @@ let id_finder_excel = (schedule, conf, channel, running_video, time) => {
                 }
             }
 
-            if ((conf.start_date <= current_time) && (current_time <= schedule[0].end_time)) {
+            if ((conf.start_date[sheet_num] <= current_time) && (current_time <= schedule[0].end_time)) {
                 // the first video is streaming now
                 if (schedule[0].ad_point.length == 5) {
                     for (let k = 0; k < 5; k++) {
@@ -252,7 +257,7 @@ let id_finder_excel = (schedule, conf, channel, running_video, time) => {
                 running_video.excel.pluto[channel] = schedule[0].id;
                 return schedule[0].id;
             }
-            else if ((current_time < conf.start_date) || (schedule[schedule.length - 1].end_time < current_time)) {
+            else if ((current_time < conf.start_date[sheet_num]) || (schedule[schedule.length - 1].end_time < current_time)) {
                 throw new Error('[error] start_date or end_time');
             }
             else {
@@ -278,7 +283,7 @@ let id_finder_excel = (schedule, conf, channel, running_video, time) => {
                 }
             }
 
-            if ((conf.start_date <= current_time) && (current_time <= schedule[0].end_time)) {
+            if ((conf.start_date[sheet_num] <= current_time) && (current_time <= schedule[0].end_time)) {
                 // the first video is streaming now
                 for (let k = 0; k < schedule[0].ad_point.length; k++) {
                     if ((schedule[0].ad_point[k].start <= current_time) && (current_time <= schedule[0].ad_point[k].end)) {
@@ -293,7 +298,7 @@ let id_finder_excel = (schedule, conf, channel, running_video, time) => {
                 if (conf.option == 2) running_video.excel.samsung_northern_america[channel] = schedule[0].id;
                 return schedule[0].id;
             }
-            else if ((current_time < conf.start_date) || (schedule[schedule.length - 1].end_time < current_time)) {
+            else if ((current_time < conf.start_date[sheet_num]) || (schedule[schedule.length - 1].end_time < current_time)) {
                // throw new Error('[error] start_date or end_time');
                return 0;
             }
@@ -409,16 +414,16 @@ let module_excel = (running_video, conf) => {
         let schedule = [];
         let excel = xlsx.readFile(conf.excel);
         let json;
-        for (let channel = 0; channel < excel.SheetNames.length; channel++) {
-            json = read_excel(excel, conf, channel);
+        for (let sheet = 0; sheet < excel.SheetNames.length; sheet++) {
+            json = read_excel(excel, conf, sheet);
             if (conf.option == 1 || conf.option == 2) {
                 json = samsung_smartTV(json);
             }
-            schedule.push(parser_excel(json, conf));
-            id_finder_excel(schedule[channel], conf, channel, running_video, conf.current_time); //current time = '2022-04-01 00:00:01'
+            schedule.push(parser_excel(json, conf, sheet));
+            id_finder_excel(schedule[sheet], conf, sheet, running_video, conf.current_time); //current time = '2022-04-01 00:00:01'
             // setInterval(
             //     () => {
-            //       id_finder_excel(schedule[channel], conf, channel);
+            //       id_finder_excel(schedule[sheet], conf, sheet);
             //     }, 1000
             // )
         }
