@@ -1,0 +1,47 @@
+{"server_id":"manager_1234","command":"ch_add","channel":
+	{
+		"id" : "cocos_program_B120144576_D3",
+			"version" : "v1",
+			"input" : {
+				"type" : "file",
+				"socket_timeout": 3,
+				"reconnect_timeout" : 60,
+				"options" : {
+					"retry_period" : 3,
+					"max_retry_count" : 0
+				},
+				"streams" : [
+				{
+					"adaptive_id": "1080p",
+					"urls": [
+						"http://Y2pjb2Nvc3N0Z0BjamVubXN0b3I6MjU1MmM1MjVhOWRkMTUzNTcwNjFiZTIzMTcyMzRlNjU=@cjcocosstg.x-cdn.com/dav/CLIP/COCOS/SST/B120144576/220592/B120144576_220592_g60_t35.mp4"
+					]
+				},
+				{
+					"adaptive_id": "720p",
+					"urls": [
+						"http://Y2pjb2Nvc3N0Z0BjamVubXN0b3I6MjU1MmM1MjVhOWRkMTUzNTcwNjFiZTIzMTcyMzRlNjU=@cjcocosstg.x-cdn.com/dav/CLIP/COCOS/SST/B120144576/220592/B120144576_220592_g60_t34.mp4"
+					]
+				},
+				{
+					"adaptive_id": "480p",
+					"urls": [
+						"http://Y2pjb2Nvc3N0Z0BjamVubXN0b3I6MjU1MmM1MjVhOWRkMTUzNTcwNjFiZTIzMTcyMzRlNjU=@cjcocosstg.x-cdn.com/dav/CLIP/COCOS/SST/B120144576/220592/B120144576_220592_g60_t33.mp4"
+					]
+				},
+				{
+					"adaptive_id": "360p",
+					"urls": [
+						"http://Y2pjb2Nvc3N0Z0BjamVubXN0b3I6MjU1MmM1MjVhOWRkMTUzNTcwNjFiZTIzMTcyMzRlNjU=@cjcocosstg.x-cdn.com/dav/CLIP/COCOS/SST/B120144576/220592/B120144576_220592_g60_t32.mp4"
+					]
+				},
+				{
+					"adaptive_id": "270p",
+					"urls": [
+						"http://Y2pjb2Nvc3N0Z0BjamVubXN0b3I6MjU1MmM1MjVhOWRkMTUzNTcwNjFiZTIzMTcyMzRlNjU=@cjcocosstg.x-cdn.com/dav/CLIP/COCOS/SST/B120144576/220592/B120144576_220592_g60_t31.mp4"
+					]
+				}
+				]
+			}
+	}
+}

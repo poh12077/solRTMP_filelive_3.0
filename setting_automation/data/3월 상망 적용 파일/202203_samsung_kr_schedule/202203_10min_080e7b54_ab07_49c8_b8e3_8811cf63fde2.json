@@ -1,0 +1,1504 @@
+{"server_id":"manager_1234","command":"ch_add","channel":
+{
+	"id" : "080e7b54_ab07_49c8_b8e3_8811cf63fde2",
+	"version" : "v1",
+	"category": "live",
+	"input" : {
+		"type" : "schedule",
+		"socket_timeout" : 3,
+		"reconnect_timeout" : 60,
+		"streams" : [
+                       {
+                                "adaptive_id": "1080p",
+                                "variant": true,
+                                "urls": [
+                                        "file:///stg/solrtmp/file/default_1080p.mp4"
+                                ]
+                        },
+                        {
+                                "adaptive_id": "720p",
+                                "variant": true,
+                                "urls": [
+                                        "file:///stg/solrtmp/file/default_720p.mp4"
+                                ]
+                        },
+                        {
+                                "adaptive_id": "480p",
+                                "variant": true,
+                                "urls": [
+                                        "file:///stg/solrtmp/file/default_480p.mp4"
+                                ]
+                        },
+                        {
+                                "adaptive_id": "360p",
+                                "variant": true,
+                                "urls": [
+                                        "file:///stg/solrtmp/file/default_360p.mp4"
+                                ]
+                        },
+                        {
+                                "adaptive_id": "270p",
+                                "variant": true,
+                                "urls": [
+                                        "file:///stg/solrtmp/file/default_270p.mp4"
+                                ]
+                        }
+		]
+	},
+	"schedule": {
+		"loop": true,
+		"sync_timeout": 2,
+		"range_start_by": "front",
+		"auto_adaptive_mapping": "media",
+		"list": [
+                        {
+                                "start_date": "20220224T17:00:00",
+                                "id": "schid_354_1",
+                                "ch_id": "cocos_program_B120127353_D354",
+                                "range": {
+                                        "start": 0,
+                                        "end": 600000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_354_1",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_354_2",
+                                "ch_id": "cocos_program_B120127353_D354",
+                                "range": {
+                                        "start": 600000,
+                                        "end": 1200000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_354_2",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_354_3",
+                                "ch_id": "cocos_program_B120127353_D354",
+                                "range": {
+                                        "start": 1200000,
+                                        "end": 1800000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_354_3",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_354_4",
+                                "ch_id": "cocos_program_B120127353_D354",
+                                "range": {
+                                        "start": 1800000,
+                                        "end": 2400000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_354_4",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_354_5",
+                                "ch_id": "cocos_program_B120127353_D354",
+                                "range": {
+                                        "start": 2400000,
+                                        "end": 3000000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_354_5",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_354_6",
+                                "ch_id": "cocos_program_B120127353_D354",
+                                "range": {
+                                        "start": 3000000,
+                                        "end": 3600000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_354_6",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_354_7",
+                                "ch_id": "cocos_program_B120127353_D354",
+                                "range": {
+                                        "start": 3600000,
+                                        "end": 3884000
+                                }
+                        },
+                        {
+                                "id": "schid_355_1",
+                                "ch_id": "cocos_program_B120127353_D355",
+                                "range": {
+                                        "start": 0,
+                                        "end": 600000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_355_1",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_355_2",
+                                "ch_id": "cocos_program_B120127353_D355",
+                                "range": {
+                                        "start": 600000,
+                                        "end": 1200000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_355_2",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_355_3",
+                                "ch_id": "cocos_program_B120127353_D355",
+                                "range": {
+                                        "start": 1200000,
+                                        "end": 1800000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_355_3",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_355_4",
+                                "ch_id": "cocos_program_B120127353_D355",
+                                "range": {
+                                        "start": 1800000,
+                                        "end": 2400000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_355_4",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_355_5",
+                                "ch_id": "cocos_program_B120127353_D355",
+                                "range": {
+                                        "start": 2400000,
+                                        "end": 3000000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_355_5",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_355_6",
+                                "ch_id": "cocos_program_B120127353_D355",
+                                "range": {
+                                        "start": 3000000,
+                                        "end": 3600000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_355_6",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_355_7",
+                                "ch_id": "cocos_program_B120127353_D355",
+                                "range": {
+                                        "start": 3600000,
+                                        "end": 4200000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_355_7",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_355_8",
+                                "ch_id": "cocos_program_B120127353_D355",
+                                "range": {
+                                        "start": 4200000,
+                                        "end": 4545000
+                                }
+                        },
+                        {
+                                "id": "schid_356_1",
+                                "ch_id": "cocos_program_B120127353_D356",
+                                "range": {
+                                        "start": 0,
+                                        "end": 600000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_356_1",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_356_2",
+                                "ch_id": "cocos_program_B120127353_D356",
+                                "range": {
+                                        "start": 600000,
+                                        "end": 1200000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_356_2",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_356_3",
+                                "ch_id": "cocos_program_B120127353_D356",
+                                "range": {
+                                        "start": 1200000,
+                                        "end": 1800000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_356_3",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_356_4",
+                                "ch_id": "cocos_program_B120127353_D356",
+                                "range": {
+                                        "start": 1800000,
+                                        "end": 2400000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_356_4",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_356_5",
+                                "ch_id": "cocos_program_B120127353_D356",
+                                "range": {
+                                        "start": 2400000,
+                                        "end": 3000000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_356_5",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_356_6",
+                                "ch_id": "cocos_program_B120127353_D356",
+                                "range": {
+                                        "start": 3000000,
+                                        "end": 3578000
+                                }
+                        },
+                        {
+                                "id": "schid_357_1",
+                                "ch_id": "cocos_program_B120127353_D357",
+                                "range": {
+                                        "start": 0,
+                                        "end": 600000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_357_1",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_357_2",
+                                "ch_id": "cocos_program_B120127353_D357",
+                                "range": {
+                                        "start": 600000,
+                                        "end": 1200000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_357_2",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_357_3",
+                                "ch_id": "cocos_program_B120127353_D357",
+                                "range": {
+                                        "start": 1200000,
+                                        "end": 1800000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_357_3",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_357_4",
+                                "ch_id": "cocos_program_B120127353_D357",
+                                "range": {
+                                        "start": 1800000,
+                                        "end": 2400000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_357_4",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_357_5",
+                                "ch_id": "cocos_program_B120127353_D357",
+                                "range": {
+                                        "start": 2400000,
+                                        "end": 3000000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_357_5",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_357_6",
+                                "ch_id": "cocos_program_B120127353_D357",
+                                "range": {
+                                        "start": 3000000,
+                                        "end": 3600000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_357_6",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_357_7",
+                                "ch_id": "cocos_program_B120127353_D357",
+                                "range": {
+                                        "start": 3600000,
+                                        "end": 4200000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_357_7",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_357_8",
+                                "ch_id": "cocos_program_B120127353_D357",
+                                "range": {
+                                        "start": 4200000,
+                                        "end": 4670000
+                                }
+                        },
+                        {
+                                "id": "schid_358_1",
+                                "ch_id": "cocos_program_B120127353_D358",
+                                "range": {
+                                        "start": 0,
+                                        "end": 600000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_358_1",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_358_2",
+                                "ch_id": "cocos_program_B120127353_D358",
+                                "range": {
+                                        "start": 600000,
+                                        "end": 1200000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_358_2",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_358_3",
+                                "ch_id": "cocos_program_B120127353_D358",
+                                "range": {
+                                        "start": 1200000,
+                                        "end": 1800000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_358_3",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_358_4",
+                                "ch_id": "cocos_program_B120127353_D358",
+                                "range": {
+                                        "start": 1800000,
+                                        "end": 2400000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_358_4",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_358_5",
+                                "ch_id": "cocos_program_B120127353_D358",
+                                "range": {
+                                        "start": 2400000,
+                                        "end": 3000000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_358_5",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_358_6",
+                                "ch_id": "cocos_program_B120127353_D358",
+                                "range": {
+                                        "start": 3000000,
+                                        "end": 3600000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_358_6",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_358_7",
+                                "ch_id": "cocos_program_B120127353_D358",
+                                "range": {
+                                        "start": 3600000,
+                                        "end": 4200000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_358_7",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_358_8",
+                                "ch_id": "cocos_program_B120127353_D358",
+                                "range": {
+                                        "start": 4200000,
+                                        "end": 4542000
+                                }
+                        },
+                        {
+                                "id": "schid_359_1",
+                                "ch_id": "cocos_program_B120127353_D359",
+                                "range": {
+                                        "start": 0,
+                                        "end": 600000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_359_1",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_359_2",
+                                "ch_id": "cocos_program_B120127353_D359",
+                                "range": {
+                                        "start": 600000,
+                                        "end": 1200000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_359_2",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_359_3",
+                                "ch_id": "cocos_program_B120127353_D359",
+                                "range": {
+                                        "start": 1200000,
+                                        "end": 1800000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_359_3",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_359_4",
+                                "ch_id": "cocos_program_B120127353_D359",
+                                "range": {
+                                        "start": 1800000,
+                                        "end": 2400000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_359_4",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_359_5",
+                                "ch_id": "cocos_program_B120127353_D359",
+                                "range": {
+                                        "start": 2400000,
+                                        "end": 3000000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_359_5",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_359_6",
+                                "ch_id": "cocos_program_B120127353_D359",
+                                "range": {
+                                        "start": 3000000,
+                                        "end": 3600000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_359_6",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_359_7",
+                                "ch_id": "cocos_program_B120127353_D359",
+                                "range": {
+                                        "start": 3600000,
+                                        "end": 4200000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_359_7",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_359_8",
+                                "ch_id": "cocos_program_B120127353_D359",
+                                "range": {
+                                        "start": 4200000,
+                                        "end": 4410000
+                                }
+                        },
+                        {
+                                "id": "schid_360_1",
+                                "ch_id": "cocos_program_B120127353_D360",
+                                "range": {
+                                        "start": 0,
+                                        "end": 600000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_360_1",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_360_2",
+                                "ch_id": "cocos_program_B120127353_D360",
+                                "range": {
+                                        "start": 600000,
+                                        "end": 1200000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_360_2",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_360_3",
+                                "ch_id": "cocos_program_B120127353_D360",
+                                "range": {
+                                        "start": 1200000,
+                                        "end": 1800000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_360_3",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_360_4",
+                                "ch_id": "cocos_program_B120127353_D360",
+                                "range": {
+                                        "start": 1800000,
+                                        "end": 2400000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_360_4",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_360_5",
+                                "ch_id": "cocos_program_B120127353_D360",
+                                "range": {
+                                        "start": 2400000,
+                                        "end": 3000000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_360_5",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_360_6",
+                                "ch_id": "cocos_program_B120127353_D360",
+                                "range": {
+                                        "start": 3000000,
+                                        "end": 3600000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_360_6",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_360_7",
+                                "ch_id": "cocos_program_B120127353_D360",
+                                "range": {
+                                        "start": 3600000,
+                                        "end": 4200000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_360_7",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_360_8",
+                                "ch_id": "cocos_program_B120127353_D360",
+                                "range": {
+                                        "start": 4200000,
+                                        "end": 4328000
+                                }
+                        },
+                        {
+                                "id": "schid_361_1",
+                                "ch_id": "cocos_program_B120127353_D361",
+                                "range": {
+                                        "start": 0,
+                                        "end": 600000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_361_1",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_361_2",
+                                "ch_id": "cocos_program_B120127353_D361",
+                                "range": {
+                                        "start": 600000,
+                                        "end": 1200000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_361_2",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_361_3",
+                                "ch_id": "cocos_program_B120127353_D361",
+                                "range": {
+                                        "start": 1200000,
+                                        "end": 1800000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_361_3",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_361_4",
+                                "ch_id": "cocos_program_B120127353_D361",
+                                "range": {
+                                        "start": 1800000,
+                                        "end": 2400000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_361_4",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_361_5",
+                                "ch_id": "cocos_program_B120127353_D361",
+                                "range": {
+                                        "start": 2400000,
+                                        "end": 3000000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_361_5",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_361_6",
+                                "ch_id": "cocos_program_B120127353_D361",
+                                "range": {
+                                        "start": 3000000,
+                                        "end": 3600000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_361_6",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_361_7",
+                                "ch_id": "cocos_program_B120127353_D361",
+                                "range": {
+                                        "start": 3600000,
+                                        "end": 4200000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_361_7",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_361_8",
+                                "ch_id": "cocos_program_B120127353_D361",
+                                "range": {
+                                        "start": 4200000,
+                                        "end": 4474000
+                                }
+                        },
+                        {
+                                "id": "schid_362_1",
+                                "ch_id": "cocos_program_B120127353_D362",
+                                "range": {
+                                        "start": 0,
+                                        "end": 600000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_362_1",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_362_2",
+                                "ch_id": "cocos_program_B120127353_D362",
+                                "range": {
+                                        "start": 600000,
+                                        "end": 1200000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_362_2",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_362_3",
+                                "ch_id": "cocos_program_B120127353_D362",
+                                "range": {
+                                        "start": 1200000,
+                                        "end": 1800000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_362_3",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_362_4",
+                                "ch_id": "cocos_program_B120127353_D362",
+                                "range": {
+                                        "start": 1800000,
+                                        "end": 2400000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_362_4",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_362_5",
+                                "ch_id": "cocos_program_B120127353_D362",
+                                "range": {
+                                        "start": 2400000,
+                                        "end": 3000000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_362_5",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_362_6",
+                                "ch_id": "cocos_program_B120127353_D362",
+                                "range": {
+                                        "start": 3000000,
+                                        "end": 3600000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_362_6",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_362_7",
+                                "ch_id": "cocos_program_B120127353_D362",
+                                "range": {
+                                        "start": 3600000,
+                                        "end": 4200000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_362_7",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_362_8",
+                                "ch_id": "cocos_program_B120127353_D362",
+                                "range": {
+                                        "start": 4200000,
+                                        "end": 4482000
+                                }
+                        },
+                        {
+                                "id": "schid_363_1",
+                                "ch_id": "cocos_program_B120127353_D363",
+                                "range": {
+                                        "start": 0,
+                                        "end": 600000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_363_1",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_363_2",
+                                "ch_id": "cocos_program_B120127353_D363",
+                                "range": {
+                                        "start": 600000,
+                                        "end": 1200000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_363_2",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_363_3",
+                                "ch_id": "cocos_program_B120127353_D363",
+                                "range": {
+                                        "start": 1200000,
+                                        "end": 1800000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_363_3",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_363_4",
+                                "ch_id": "cocos_program_B120127353_D363",
+                                "range": {
+                                        "start": 1800000,
+                                        "end": 2400000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_363_4",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_363_5",
+                                "ch_id": "cocos_program_B120127353_D363",
+                                "range": {
+                                        "start": 2400000,
+                                        "end": 3000000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_363_5",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_363_6",
+                                "ch_id": "cocos_program_B120127353_D363",
+                                "range": {
+                                        "start": 3000000,
+                                        "end": 3600000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_363_6",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_363_7",
+                                "ch_id": "cocos_program_B120127353_D363",
+                                "range": {
+                                        "start": 3600000,
+                                        "end": 4200000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_363_7",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_363_8",
+                                "ch_id": "cocos_program_B120127353_D363",
+                                "range": {
+                                        "start": 4200000,
+                                        "end": 4395000
+                                }
+                        },
+                        {
+                                "id": "schid_364_1",
+                                "ch_id": "cocos_program_B120127353_D364",
+                                "range": {
+                                        "start": 0,
+                                        "end": 600000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_364_1",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_364_2",
+                                "ch_id": "cocos_program_B120127353_D364",
+                                "range": {
+                                        "start": 600000,
+                                        "end": 1200000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_364_2",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_364_3",
+                                "ch_id": "cocos_program_B120127353_D364",
+                                "range": {
+                                        "start": 1200000,
+                                        "end": 1800000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_364_3",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_364_4",
+                                "ch_id": "cocos_program_B120127353_D364",
+                                "range": {
+                                        "start": 1800000,
+                                        "end": 2400000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_364_4",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_364_5",
+                                "ch_id": "cocos_program_B120127353_D364",
+                                "range": {
+                                        "start": 2400000,
+                                        "end": 3000000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_364_5",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_364_6",
+                                "ch_id": "cocos_program_B120127353_D364",
+                                "range": {
+                                        "start": 3000000,
+                                        "end": 3600000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_364_6",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_364_7",
+                                "ch_id": "cocos_program_B120127353_D364",
+                                "range": {
+                                        "start": 3600000,
+                                        "end": 4200000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_364_7",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_364_8",
+                                "ch_id": "cocos_program_B120127353_D364",
+                                "range": {
+                                        "start": 4200000,
+                                        "end": 4215000
+                                }
+                        },
+                        {
+                                "id": "schid_365_1",
+                                "ch_id": "cocos_program_B120127353_D365",
+                                "range": {
+                                        "start": 0,
+                                        "end": 600000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_365_1",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_365_2",
+                                "ch_id": "cocos_program_B120127353_D365",
+                                "range": {
+                                        "start": 600000,
+                                        "end": 1200000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_365_2",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_365_3",
+                                "ch_id": "cocos_program_B120127353_D365",
+                                "range": {
+                                        "start": 1200000,
+                                        "end": 1800000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_365_3",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_365_4",
+                                "ch_id": "cocos_program_B120127353_D365",
+                                "range": {
+                                        "start": 1800000,
+                                        "end": 2400000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_365_4",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_365_5",
+                                "ch_id": "cocos_program_B120127353_D365",
+                                "range": {
+                                        "start": 2400000,
+                                        "end": 3000000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_365_5",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_365_6",
+                                "ch_id": "cocos_program_B120127353_D365",
+                                "range": {
+                                        "start": 3000000,
+                                        "end": 3600000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_365_6",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_365_7",
+                                "ch_id": "cocos_program_B120127353_D365",
+                                "range": {
+                                        "start": 3600000,
+                                        "end": 4200000
+                                }
+                        },
+                        {
+                                "id": "schid_ad_365_7",
+                                "ch_id": "cocos_ad_60s_20210528_2mbps",
+                                "range": {
+                                        "start": 0,
+                                        "end": 60000
+                                }
+                        },
+                        {
+                                "id": "schid_365_8",
+                                "ch_id": "cocos_program_B120127353_D365",
+                                "range": {
+                                        "start": 4200000,
+                                        "end": 4489000
+                                }
+                        }
+		]
+	},
+	"output" : {
+		"base_dir" : "%r/%s",
+		"clear_when_finish" : true,
+		"segment_opt" : {
+			"playlist_chunk_count" : 10,
+			"max_chunk_count" : 30,
+			"duration_time" : 6,
+			"align_by_src": true
+		},
+		"variant": {
+			"memory_caching": false,
+			"sort_order": "bandwidth",
+			"item": {
+				"codec": true,
+				"bandwidth": true,
+				"resolution": true,
+				"framerate": true,
+				"sar": false,
+				"samplerate": false,
+				"channel": false,
+				"lang": true
+			},
+			"output_path": [
+				{
+					"o_type": "gateway_m3u8",
+					"combine": "%f/playlist.m3u8"
+				},
+				{
+					"o_type": "mpd",
+					"combine": "%f/manifest.mpd"
+				}
+			]
+		},
+		"hls" : {
+			"ad_marker": "scte35enh",
+			"memory_caching" : false,
+			"start_sequence_num" : 0,
+			"hls_version" : 3,
+			"output_path" : [
+			{
+				"o_type" : "m3u8",
+				"combine" : "%f/%a/chunklist.m3u8"
+			},
+			{
+				"o_type": "gateway_m3u8",
+				"combine": "%f/%a/playlist.m3u8"
+			},
+			{
+				"o_type" : "ts_segment",
+				"combine" : "%f/%a/segment_%n.ts"
+			}
+			]
+		}
+	}
+}
+}
