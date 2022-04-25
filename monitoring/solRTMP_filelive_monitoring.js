@@ -61,19 +61,19 @@ let read_conf = (file_name) => {
             start_date: '',
             current_time: '',
 
-            ad_duration:{
+            ad_duration: {
                 pluto: '',
                 samsung_korea: '',
                 samsung_northern_america: ''
             },
-            ad_interval:{
+            ad_interval: {
                 samsung_korea: '',
                 samsung_northern_america: ''
             },
-            ad_name:{
-                pluto:'',
-                samsung_korea:'',
-                samsung_northern_america:''
+            ad_name: {
+                pluto: '',
+                samsung_korea: '',
+                samsung_northern_america: ''
             }
         }
 
@@ -82,8 +82,8 @@ let read_conf = (file_name) => {
         conf.option = conf_file.option;
         conf.start_date = conf_file.start_date;
         conf.current_time = conf_file.current_time;
-       // conf.current_time = fetch_unix_timestamp(conf_file.current_time);
-        for(let sheet in conf.start_date){
+        // conf.current_time = fetch_unix_timestamp(conf_file.current_time);
+        for (let sheet in conf.start_date) {
             conf.start_date[sheet] = fetch_unix_timestamp(conf.start_date[sheet]);
         }
 
@@ -98,8 +98,8 @@ let read_conf = (file_name) => {
 
         if (conf.option < 1 || conf.option > 4 || conf.current_time <= 0 || conf.ad_duration.pluto <= 0
             || conf.ad_duration.samsung_korea <= 0 || conf.ad_duration.samsung_northern_america <= 0 || conf.ad_interval.samsung_korea <= 0
-            || conf.ad_interval.samsung_northern_america <= 0 || conf.ad_name.pluto.length <=0 || conf.ad_name.samsung_korea.length <= 0 
-            || conf.ad_name.samsung_northern_america.length <=0){
+            || conf.ad_interval.samsung_northern_america <= 0 || conf.ad_name.pluto.length <= 0 || conf.ad_name.samsung_korea.length <= 0
+            || conf.ad_name.samsung_northern_america.length <= 0) {
             throw new Error();
         }
 
@@ -208,21 +208,22 @@ let parser_excel = (json, conf, sheet) => {
 }
 
 //time = '2012-05-17 10:20:30'
-let id_finder_excel = (schedule, conf, channel, running_video ) => {
+let id_finder_excel = (schedule, conf, channel, running_video, current_time) => {
     try {
-        let current_time;
+        //let current_time;
         channel = channel.toString();
         let sheet_num = 'sheet_' + channel;
-        if (conf.current_time === undefined) {
-            //current time
-            current_time = Math.floor(new Date().getTime());
-        } else {
-            //input time
-            current_time = Math.floor(new Date(conf.current_time).getTime());
-        }
-        if (isNaN(current_time)) {
-            throw new Error('[error] input time');
-        }
+        // if (conf.current_time === undefined) {
+        //     //real time
+        //     current_time = Math.floor(new Date().getTime());
+        // } else {
+        //     //input time
+        //     current_time = Math.floor(new Date(conf.current_time).getTime());
+        // }
+        // if (isNaN(current_time)) {
+        //     throw new Error('[error] input time');
+        // }
+
         //pluto
         if (conf.option == 3 || conf.option == 4) {
             for (let i = 0; i < schedule.length - 1; i++) {
@@ -236,7 +237,7 @@ let id_finder_excel = (schedule, conf, channel, running_video ) => {
                             }
                         }
                     }
-                   // console.log(new Date(), schedule[i + 1].id);
+                    // console.log(new Date(), schedule[i + 1].id);
                     running_video.excel.pluto[channel] = schedule[i + 1].id;
                     return schedule[i + 1].id;
                 }
@@ -247,7 +248,7 @@ let id_finder_excel = (schedule, conf, channel, running_video ) => {
                 if (schedule[0].ad_point.length == 5) {
                     for (let k = 0; k < 5; k++) {
                         if ((schedule[0].ad_point[k].start <= current_time) && (current_time <= schedule[0].ad_point[k].end)) {
-                          //  console.log(new Date(), 'cocos_ad_120s_us is streaming on the ', schedule[0].id);
+                            //  console.log(new Date(), 'cocos_ad_120s_us is streaming on the ', schedule[0].id);
                             running_video.excel.pluto[channel] = conf.ad_name.pluto;
                             return "cocos_ad_120s_us";
                         }
@@ -270,15 +271,15 @@ let id_finder_excel = (schedule, conf, channel, running_video ) => {
                 if ((schedule[i].end_time < current_time) && (current_time <= schedule[i + 1].end_time)) {
                     for (let k = 0; k < schedule[i + 1].ad_point.length; k++) {
                         if ((schedule[i + 1].ad_point[k].start <= current_time) && (current_time <= schedule[i + 1].ad_point[k].end)) {
-                           // console.log(new Date(), 'cocos_ad_60s_20210528_2mbps is streaming on the', schedule[i + 1].id);
-                            if (conf.option == 1) running_video.excel.samsung_korea[channel] = conf.ad_name.samsung_korea;
-                            if (conf.option == 2) running_video.excel.samsung_northern_america[channel] = conf.ad_name.samsung_northern_america;
+                            // console.log(new Date(), 'cocos_ad_60s_20210528_2mbps is streaming on the', schedule[i + 1].id);
+                            if (conf.option == 1) running_video.excel.samsung_korea[ mapping_table[channel] ] = conf.ad_name.samsung_korea;
+                            if (conf.option == 2) running_video.excel.samsung_northern_america[ mapping_table[channel] ] = conf.ad_name.samsung_northern_america;
                             return "cocos_ad_60s_20210528_2mbps";
                         }
                     }
                     //console.log(new Date(), schedule[i + 1].id);
-                    if (conf.option == 1) running_video.excel.samsung_korea[channel] = schedule[i + 1].id;
-                    if (conf.option == 2) running_video.excel.samsung_northern_america[channel] = schedule[i + 1].id;
+                    if (conf.option == 1) running_video.excel.samsung_korea[mapping_table[channel]] = schedule[i + 1].id;
+                    if (conf.option == 2) running_video.excel.samsung_northern_america[mapping_table[channel]] = schedule[i + 1].id;
                     return schedule[i + 1].id;
                 }
             }
@@ -288,19 +289,19 @@ let id_finder_excel = (schedule, conf, channel, running_video ) => {
                 for (let k = 0; k < schedule[0].ad_point.length; k++) {
                     if ((schedule[0].ad_point[k].start <= current_time) && (current_time <= schedule[0].ad_point[k].end)) {
                         //console.log(new Date(), 'cocos_ad_60s_20210528_2mbps is streaming on the ', schedule[0].id);
-                        if (conf.option == 1) running_video.excel.samsung_korea[channel] = conf.ad_name.samsung_korea;
-                        if (conf.option == 2) running_video.excel.samsung_northern_america[channel] = conf.ad_name.samsung_northern_america;
+                        if (conf.option == 1) running_video.excel.samsung_korea[mapping_table[channel]] = conf.ad_name.samsung_korea;
+                        if (conf.option == 2) running_video.excel.samsung_northern_america[mapping_table[channel]] = conf.ad_name.samsung_northern_america;
                         return "cocos_ad_60s_20210528_2mbps";
                     }
                 }
                 //console.log(new Date(), schedule[0].id);
-                if (conf.option == 1) running_video.excel.samsung_korea[channel] = schedule[0].id;
-                if (conf.option == 2) running_video.excel.samsung_northern_america[channel] = schedule[0].id;
+                if (conf.option == 1) running_video.excel.samsung_korea[mapping_table[channel]] = schedule[0].id;
+                if (conf.option == 2) running_video.excel.samsung_northern_america[mapping_table[channel]] = schedule[0].id;
                 return schedule[0].id;
             }
             else if ((current_time < conf.start_date[sheet_num]) || (schedule[schedule.length - 1].end_time < current_time)) {
-               // throw new Error('[error] start_date or end_time');
-               return 0;
+                // throw new Error('[error] start_date or end_time');
+                return 0;
             }
             else {
                 throw new Error();
@@ -346,20 +347,8 @@ let parser_solrtmp_log = (solrtmp_log) => {
 }
 
 //current time = '2022-05-04 00:01:34' 
-let id_finder_solrtmp_log = (log, conf, running_video, time) => {
+let id_finder_solrtmp_log = (log, conf, running_video, current_time) => {
     try {
-        let current_time;
-        if (time === undefined) {
-            //current time
-            current_time = Math.floor(new Date().getTime());
-        } else {
-            //input time
-            current_time = Math.floor(new Date(time).getTime());
-        }
-        if (isNaN(current_time)) {
-            throw new Error('[error] input time');
-        }
-
         for (let channel in log) {
             //last line check
             if (fetch_unix_timestamp(log[channel][log[channel].length - 1].time) <= current_time) {
@@ -376,11 +365,11 @@ let id_finder_solrtmp_log = (log, conf, running_video, time) => {
             //middle line check
             for (let line = 0; line < log[channel].length - 1; line++) {
                 if ((fetch_unix_timestamp(log[channel][line].time) <= current_time) && (current_time < fetch_unix_timestamp(log[channel][line + 1].time))) {
-                   // console.log(channel, log[channel][line].video_id);
+                    // console.log(channel, log[channel][line].video_id);
                     if (conf.option == 3) { running_video.solrtmp_log.pluto[channel] = id_cut(log[channel][line].video_id, 3); }
                     if (conf.option == 1) { running_video.solrtmp_log.samsung_korea[channel] = id_cut(log[channel][line].video_id, 2); }
                     if (conf.option == 2) { running_video.solrtmp_log.samsung_northern_america[channel] = id_cut(log[channel][line].video_id, 2); }
-                    continue;
+                    break;
                 }
             }
         }
@@ -412,20 +401,26 @@ let samsung_smartTV = (json) => {
 let module_excel = (running_video, conf) => {
     try {
         let schedule = [];
+        //read whole excel
         let excel = xlsx.readFile(conf.excel);
         let json;
+        let current_time = current_time_finder(conf);
+        let cycle = 1000;
+        let test = 1;
+        //read excel by sheet
         for (let sheet = 0; sheet < excel.SheetNames.length; sheet++) {
             json = read_excel(excel, conf, sheet);
             if (conf.option == 1 || conf.option == 2) {
                 json = samsung_smartTV(json);
             }
             schedule.push(parser_excel(json, conf, sheet));
-            id_finder_excel(schedule[sheet], conf, sheet, running_video); //current time = '2022-04-01 00:00:01'
-            // setInterval(
-            //     () => {
-            //       id_finder_excel(schedule[sheet], conf, sheet);
-            //     }, 1000
-            // )
+            setInterval(
+                () => { 
+                    current_time = current_time_synchronizer(current_time, cycle);
+                    id_finder_excel(schedule[sheet], conf, sheet, running_video, current_time);
+                }, cycle/test
+            )
+
         }
         return schedule;
     } catch (err) {
@@ -505,18 +500,52 @@ let channel_map = (schedule, log, running_video) => {
         }
     }
 
-    for (let sheet in running_video.excel.samsung_korea) {
-        running_video.excel.samsung_korea[mapping_table[sheet]] = running_video.excel.samsung_korea[sheet];
-        delete running_video.excel.samsung_korea[sheet];
-    }
+    // for (let sheet in running_video.excel.samsung_korea) {
+    //     running_video.excel.samsung_korea[mapping_table[sheet]] = running_video.excel.samsung_korea[sheet];
+    //     delete running_video.excel.samsung_korea[sheet];
+    // }
 
-    // return mapping_table;
+     return mapping_table;
+}
+
+let current_time_finder = (conf) => {
+    try {
+        if (conf.current_time === undefined) {
+            //real time
+            return Math.floor(new Date().getTime());
+        }
+
+        let unix_current_time = new Date(conf.current_time).getTime();
+
+        if (isNaN(unix_current_time)) {
+            throw new Error('[error] input time');
+        }
+        else {
+            //input time
+            return unix_current_time;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+let current_time_synchronizer =(current_time, cycle) =>{
+    current_time+=cycle;
+    return current_time;
 }
 
 let module_solrtmp_log = (running_video, conf) => {
     try {
         let log = parser_solrtmp_log(conf.log);
-        id_finder_solrtmp_log(log, conf, running_video, conf.current_time); //current time = '2022-04-05 00:16:35'
+        let current_time = current_time_finder(conf);
+        let cycle = 1000;
+        let test = 1;
+        setInterval(
+            () => { 
+                current_time = current_time_synchronizer(current_time, cycle);
+                id_finder_solrtmp_log(log, conf, running_video, current_time); 
+            }, cycle/test
+        )
 
         //print_console(log);
         //file_write(log, './workspace/test.log');
@@ -531,11 +560,14 @@ let streaming_detect = (running_video) => {
     try {
         for (let channel in running_video.excel.samsung_korea) {
             if (running_video.excel.samsung_korea[channel] === running_video.solrtmp_log.samsung_korea[channel]) {
-                console.log(running_video.excel.samsung_korea[channel], running_video.solrtmp_log.samsung_korea[channel], "no problem");
+                console.log(running_video.excel.samsung_korea[channel], running_video.solrtmp_log.samsung_korea[channel], "success");
             } else {
-                console.log(running_video.excel.samsung_korea[channel], running_video.solrtmp_log.samsung_korea[channel], "servive faliure");
+                console.log(running_video.excel.samsung_korea[channel], running_video.solrtmp_log.samsung_korea[channel], "fali");
             }
+            //test
+            break;
         }
+        //console.log('\n');
     } catch (err) {
         console.log(err);
         process.exit(1);
@@ -560,9 +592,9 @@ let main = () => {
         const schedule = module_excel(running_video, conf);
         const log = module_solrtmp_log(running_video, conf);
         if (conf.option == 1 || conf.option == 2) {
-            channel_map(schedule, log, running_video);
+           mapping_table = channel_map(schedule, log, running_video);
         }
-        streaming_detect(running_video);
+        setInterval(() => { streaming_detect(running_video) }, 1000);
 
     } catch (error) {
         console.log(error);
