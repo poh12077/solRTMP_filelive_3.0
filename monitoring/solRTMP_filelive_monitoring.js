@@ -398,15 +398,13 @@ let samsung_smartTV = (json) => {
     }
 }
 
-let module_excel = (running_video, conf) => {
+let module_excel = (running_video, conf, cycle, test) => {
     try {
         let schedule = [];
         //read whole excel
         let excel = xlsx.readFile(conf.excel);
         let json;
         let current_time = current_time_finder(conf);
-        let cycle = 1000;
-        let test = 1;
         //read excel by sheet
         for (let sheet = 0; sheet < excel.SheetNames.length; sheet++) {
             json = read_excel(excel, conf, sheet);
@@ -534,12 +532,10 @@ let current_time_synchronizer =(current_time, cycle) =>{
     return current_time;
 }
 
-let module_solrtmp_log = (running_video, conf) => {
+let module_solrtmp_log = (running_video, conf, cycle, test) => {
     try {
         let log = parser_solrtmp_log(conf.log);
         let current_time = current_time_finder(conf);
-        let cycle = 1000;
-        let test = 1;
         setInterval(
             () => { 
                 current_time = current_time_synchronizer(current_time, cycle);
@@ -560,9 +556,9 @@ let streaming_detect = (running_video) => {
     try {
         for (let channel in running_video.excel.samsung_korea) {
             if (running_video.excel.samsung_korea[channel] === running_video.solrtmp_log.samsung_korea[channel]) {
-                console.log(running_video.excel.samsung_korea[channel], running_video.solrtmp_log.samsung_korea[channel], "success");
+                console.log(channel, running_video.excel.samsung_korea[channel], running_video.solrtmp_log.samsung_korea[channel], "success");
             } else {
-                console.log(running_video.excel.samsung_korea[channel], running_video.solrtmp_log.samsung_korea[channel], "fali");
+                console.log(channel, running_video.excel.samsung_korea[channel], running_video.solrtmp_log.samsung_korea[channel], "fail");
             }
             //test
             break;
@@ -575,6 +571,9 @@ let streaming_detect = (running_video) => {
 }
 
 let main = () => {
+    let test=100;
+    let cycle =10000;
+
     let running_video = {
         excel: {
             pluto: {},
@@ -589,12 +588,12 @@ let main = () => {
     }
     try {
         const conf = read_conf('configure.conf');
-        const schedule = module_excel(running_video, conf);
-        const log = module_solrtmp_log(running_video, conf);
+        const schedule = module_excel(running_video, conf, cycle, test);
+        const log = module_solrtmp_log(running_video, conf, cycle, test);
         if (conf.option == 1 || conf.option == 2) {
            mapping_table = channel_map(schedule, log, running_video);
         }
-        setInterval(() => { streaming_detect(running_video) }, 1000);
+        setInterval(() => { streaming_detect(running_video) }, cycle/test);
 
     } catch (error) {
         console.log(error);
