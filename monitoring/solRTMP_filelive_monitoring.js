@@ -416,9 +416,11 @@ let module_excel = (running_video, conf, cycle, test) => {
                 () => { 
                     current_time = current_time_synchronizer(current_time, cycle);
                     id_finder_excel(schedule[sheet], conf, sheet, running_video, current_time);
+                   //streaming_detect(running_video) ;
                 }, cycle/test
             )
-
+            //test    
+            break;
         }
         return schedule;
     } catch (err) {
@@ -540,6 +542,7 @@ let module_solrtmp_log = (running_video, conf, cycle, test) => {
             () => { 
                 current_time = current_time_synchronizer(current_time, cycle);
                 id_finder_solrtmp_log(log, conf, running_video, current_time); 
+                //streaming_detect(running_video);
             }, cycle/test
         )
 
@@ -588,12 +591,15 @@ let main = () => {
     }
     try {
         const conf = read_conf('configure.conf');
-        const schedule = module_excel(running_video, conf, cycle, test);
+        //const schedule = module_excel(running_video, conf, cycle, test);
         const log = module_solrtmp_log(running_video, conf, cycle, test);
+        const schedule = module_excel(running_video, conf, cycle, test);
         if (conf.option == 1 || conf.option == 2) {
            mapping_table = channel_map(schedule, log, running_video);
         }
-        setInterval(() => { streaming_detect(running_video) }, cycle/test);
+        setInterval(() => { 
+            streaming_detect(running_video) 
+        }, cycle/test);
 
     } catch (error) {
         console.log(error);
