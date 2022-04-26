@@ -555,13 +555,19 @@ let module_solrtmp_log = (running_video, conf, cycle, test) => {
     }
 }
 
-let streaming_detect = (running_video) => {
+let streaming_detect = (running_video, cycle, warning) => {
     try {
         for (let channel in running_video.excel.samsung_korea) {
             if (running_video.excel.samsung_korea[channel] === running_video.solrtmp_log.samsung_korea[channel]) {
+                warning[0]=0;
                 console.log(channel, running_video.excel.samsung_korea[channel], running_video.solrtmp_log.samsung_korea[channel], "success");
             } else {
-                console.log(channel, running_video.excel.samsung_korea[channel], running_video.solrtmp_log.samsung_korea[channel], "fail");
+                warning[0]++;
+                //need to fix
+                if( warning[0] >= (10000/cycle)+1 ){
+                    console.log(channel, running_video.excel.samsung_korea[channel], running_video.solrtmp_log.samsung_korea[channel], "fail");
+                    warning[0]=0;    
+                }
             }
             //test
             break;
@@ -573,9 +579,10 @@ let streaming_detect = (running_video) => {
     }
 }
 
+
 let main = () => {
-    let test=1000;
-    let cycle =10000;
+    let test=10000;
+    let cycle =1000;
 
     let running_video = {
         excel: {
@@ -596,8 +603,9 @@ let main = () => {
         if (conf.option == 1 || conf.option == 2) {
            mapping_table = channel_map(schedule, log, running_video);
         }
+        let warning=[0];
         setInterval(() => { 
-            streaming_detect(running_video) 
+            streaming_detect(running_video, cycle, warning) 
         }, cycle/test);
 
     } catch (error) {
