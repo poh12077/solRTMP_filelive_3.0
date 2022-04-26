@@ -404,7 +404,8 @@ let module_excel = (running_video, conf, cycle, test) => {
         //read whole excel
         let excel = xlsx.readFile(conf.excel);
         let json;
-        let current_time = current_time_finder(conf);
+        let current_time=[];
+        
         //read excel by sheet
         for (let sheet = 0; sheet < excel.SheetNames.length; sheet++) {
             json = read_excel(excel, conf, sheet);
@@ -412,15 +413,14 @@ let module_excel = (running_video, conf, cycle, test) => {
                 json = samsung_smartTV(json);
             }
             schedule.push(parser_excel(json, conf, sheet));
+            current_time.push(current_time_finder(conf));
             setInterval(
                 () => { 
-                    current_time = current_time_synchronizer(current_time, cycle);
-                    id_finder_excel(schedule[sheet], conf, sheet, running_video, current_time);
+                    current_time[sheet] = current_time_synchronizer(current_time[sheet], cycle);
+                    id_finder_excel(schedule[sheet], conf, sheet, running_video, current_time[sheet] );
                    //streaming_detect(running_video) ;
                 }, cycle/test
             )
-            //test    
-            break;
         }
         return schedule;
     } catch (err) {
@@ -574,7 +574,7 @@ let streaming_detect = (running_video) => {
 }
 
 let main = () => {
-    let test=100;
+    let test=1000;
     let cycle =10000;
 
     let running_video = {
@@ -591,9 +591,8 @@ let main = () => {
     }
     try {
         const conf = read_conf('configure.conf');
-        //const schedule = module_excel(running_video, conf, cycle, test);
-        const log = module_solrtmp_log(running_video, conf, cycle, test);
         const schedule = module_excel(running_video, conf, cycle, test);
+        const log = module_solrtmp_log(running_video, conf, cycle, test);
         if (conf.option == 1 || conf.option == 2) {
            mapping_table = channel_map(schedule, log, running_video);
         }
