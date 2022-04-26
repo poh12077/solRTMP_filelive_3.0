@@ -60,6 +60,9 @@ let read_conf = (file_name) => {
             option: 0,
             start_date: '',
             current_time: '',
+            error_tolerance:0,
+            cycle:0,
+            test:0,
 
             ad_duration: {
                 pluto: '',
@@ -82,6 +85,10 @@ let read_conf = (file_name) => {
         conf.option = conf_file.option;
         conf.start_date = conf_file.start_date;
         conf.current_time = conf_file.current_time;
+        conf.error_tolerance = conf_file.error_tolerance;
+        conf.cycle = conf_file.cycle;
+        conf.test = conf_file.test;
+
         // conf.current_time = fetch_unix_timestamp(conf_file.current_time);
         for (let sheet in conf.start_date) {
             conf.start_date[sheet] = fetch_unix_timestamp(conf.start_date[sheet]);
@@ -99,7 +106,7 @@ let read_conf = (file_name) => {
         if (conf.option < 1 || conf.option > 4 || conf.current_time <= 0 || conf.ad_duration.pluto <= 0
             || conf.ad_duration.samsung_korea <= 0 || conf.ad_duration.samsung_northern_america <= 0 || conf.ad_interval.samsung_korea <= 0
             || conf.ad_interval.samsung_northern_america <= 0 || conf.ad_name.pluto.length <= 0 || conf.ad_name.samsung_korea.length <= 0
-            || conf.ad_name.samsung_northern_america.length <= 0) {
+            || conf.ad_name.samsung_northern_america.length <= 0 || !Number.isInteger(conf.error_tolerance) || conf.cycle <= 0 ) {
             throw new Error();
         }
 
@@ -398,7 +405,7 @@ let samsung_smartTV = (json) => {
     }
 }
 
-let module_excel = (running_video, conf, cycle, test) => {
+let module_excel = (running_video, conf) => {
     try {
         let schedule = [];
         //read whole excel
@@ -416,10 +423,10 @@ let module_excel = (running_video, conf, cycle, test) => {
             current_time.push(current_time_finder(conf));
             setInterval(
                 () => { 
-                    current_time[sheet] = current_time_synchronizer(current_time[sheet], cycle);
+                    current_time[sheet] = current_time_synchronizer(current_time[sheet], conf.cycle);
                     id_finder_excel(schedule[sheet], conf, sheet, running_video, current_time[sheet] );
                    //streaming_detect(running_video) ;
-                }, cycle/test
+                }, conf.cycle/conf.test
             )
         }
         return schedule;
@@ -534,16 +541,16 @@ let current_time_synchronizer =(current_time, cycle) =>{
     return current_time;
 }
 
-let module_solrtmp_log = (running_video, conf, cycle, test) => {
+let module_solrtmp_log = (running_video, conf) => {
     try {
         let log = parser_solrtmp_log(conf.log);
         let current_time = current_time_finder(conf);
         setInterval(
             () => { 
-                current_time = current_time_synchronizer(current_time, cycle);
+                current_time = current_time_synchronizer(current_time, conf.cycle);
                 id_finder_solrtmp_log(log, conf, running_video, current_time); 
                 //streaming_detect(running_video);
-            }, cycle/test
+            }, conf.cycle/conf.test
         )
 
         //print_console(log);
@@ -555,34 +562,43 @@ let module_solrtmp_log = (running_video, conf, cycle, test) => {
     }
 }
 
-let streaming_detect = (running_video, cycle, warning) => {
+let streaming_detect = (running_video, err_count, conf) => {
     try {
+        let default_error_tolerance = (10000/conf.cycle)+1;
         for (let channel in running_video.excel.samsung_korea) {
             if (running_video.excel.samsung_korea[channel] === running_video.solrtmp_log.samsung_korea[channel]) {
-                warning[0]=0;
+                err_count[channel]=0;
                 console.log(channel, running_video.excel.samsung_korea[channel], running_video.solrtmp_log.samsung_korea[channel], "success");
             } else {
-                warning[0]++;
+                console.log(channel, running_video.excel.samsung_korea[channel], running_video.solrtmp_log.samsung_korea[channel], "error");
+                err_count[channel]++;
                 //need to fix
-                if( warning[0] >= (10000/cycle)+1 ){
+                if( err_count[channel] >= default_error_tolerance + conf.error_tolerance ){
                     console.log(channel, running_video.excel.samsung_korea[channel], running_video.solrtmp_log.samsung_korea[channel], "fail");
-                    warning[0]=0;    
+                    err_count[channel]=0;    
                 }
             }
             //test
-            break;
+            //break;
         }
-        //console.log('\n');
+        console.log('\n');
     } catch (err) {
         console.log(err);
         process.exit(1);
     }
 }
 
+// let err_count_init=(schedule)=>{
+//     let err_count=[];
+//     for(let i=0;i<schedule.length;i++){
+//         err_count.push(0);
+//     }
+//     return err_count;
+// } 
 
 let main = () => {
-    let test=10000;
-    let cycle =1000;
+    // let test=1000;
+    // let cycle =10000;
 
     let running_video = {
         excel: {
@@ -598,15 +614,15 @@ let main = () => {
     }
     try {
         const conf = read_conf('configure.conf');
-        const schedule = module_excel(running_video, conf, cycle, test);
-        const log = module_solrtmp_log(running_video, conf, cycle, test);
+        const schedule = module_excel(running_video, conf);
+        const log = module_solrtmp_log(running_video, conf);
         if (conf.option == 1 || conf.option == 2) {
            mapping_table = channel_map(schedule, log, running_video);
         }
-        let warning=[0];
+        let err_count={};
         setInterval(() => { 
-            streaming_detect(running_video, cycle, warning) 
-        }, cycle/test);
+            streaming_detect(running_video, err_count, conf) 
+        }, conf.cycle/conf.test);
 
     } catch (error) {
         console.log(error);
