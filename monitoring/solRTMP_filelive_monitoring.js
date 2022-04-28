@@ -536,7 +536,7 @@ let module_solrtmp_log = (running_video, conf) => {
     }
 }
 
-let streaming_detect = (running_video, err_count, conf) => {
+let streaming_detect = (running_video, err_count, conf, solrtmp_log_channel) => {
     try {
         let default_error_tolerance = (10000 / conf.cycle) + 1;
         if (conf.option == 1 || conf.option == 2) {
@@ -568,15 +568,15 @@ let streaming_detect = (running_video, err_count, conf) => {
             }
             // detection loop
             for (let channel in running_video.excel.pluto) {
-                if (running_video.excel.pluto[channel] === running_video.solrtmp_log.pluto['2c56c2b9_aa3a_409e_a99b_37b01a746233']) {
+                if (running_video.excel.pluto[channel] === running_video.solrtmp_log.pluto[solrtmp_log_channel]) {
                     err_count[channel] = 0;
-                    console.log(running_video.excel.pluto[channel], running_video.solrtmp_log.pluto['2c56c2b9_aa3a_409e_a99b_37b01a746233'], "success");
+                    console.log(running_video.excel.pluto[channel], running_video.solrtmp_log.pluto[solrtmp_log_channel], "success");
                 } else {
-                    console.log( running_video.excel.pluto[channel], running_video.solrtmp_log.pluto['2c56c2b9_aa3a_409e_a99b_37b01a746233'], "error");
+                    console.log( running_video.excel.pluto[channel], running_video.solrtmp_log.pluto[solrtmp_log_channel], "error");
                     err_count[channel]++;
                     //need to fix
                     if (err_count[channel] >= default_error_tolerance + conf.error_tolerance) {
-                        console.log( running_video.excel.pluto[channel], running_video.solrtmp_log.pluto['2c56c2b9_aa3a_409e_a99b_37b01a746233'], "fail");
+                        console.log( running_video.excel.pluto[channel], running_video.solrtmp_log.pluto[solrtmp_log_channel], "fail");
                         err_count[channel] = 0;
                     }
                 }
@@ -588,6 +588,15 @@ let streaming_detect = (running_video, err_count, conf) => {
     }
 }
 
+let channel_match = (schedule, log, conf)=>{
+    if (conf.option == 1 || conf.option == 2) {
+        mapping_table = channel_map(schedule, log);
+    }else if (conf.option ==3 || conf.option ==4){
+        for(let property in log ){
+           return property;
+        }
+    }
+}
 
 let main = () => {
 
@@ -605,12 +614,10 @@ let main = () => {
         const conf = read_conf('configure.conf');
         const schedule = module_excel(running_video, conf);
         const log = module_solrtmp_log(running_video, conf);
-        if (conf.option == 1 || conf.option == 2) {
-            mapping_table = channel_map(schedule, log);
-        }
+        const solrtmp_log_channel=channel_match(schedule,log,conf);
         let err_count = {};
         setInterval(() => {
-            streaming_detect(running_video, err_count, conf)
+            streaming_detect(running_video, err_count, conf, solrtmp_log_channel)
         }, conf.cycle / conf.test);
 
     } catch (error) {
