@@ -542,10 +542,6 @@ let streaming_detect = (running_video, err_count, conf, solrtmp_log_channel) => 
     try {
         let default_error_tolerance = (10000 / conf.cycle) + 1;
         if (conf.option == 1 || conf.option == 2) {
-            //initialize error_count
-            for (let channel in running_video.excel.samsung){
-                err_count[channel] =0;
-            }
             // detection loop
             for (let channel in running_video.excel.samsung) {
                 if (running_video.excel.samsung[channel] === running_video.solrtmp_log.samsung[channel]) {
@@ -564,10 +560,6 @@ let streaming_detect = (running_video, err_count, conf, solrtmp_log_channel) => 
             console.log('\n');
             //need to fix 
         } else if (conf.option == 3 || conf.option == 4) {
-            //initialize error_count
-            for (let channel in running_video.excel.pluto){
-                err_count[channel]=0;
-            }
             // detection loop
             for (let channel in running_video.excel.pluto) {
                 if (running_video.excel.pluto[channel] === running_video.solrtmp_log.pluto[solrtmp_log_channel]) {
@@ -605,6 +597,19 @@ let channel_match = (schedule, log, conf)=>{
     }
 }
 
+//initialize err_count
+let initialize_err_count = (log, schedule, conf, err_count )=>{
+    if(conf.option==1 || conf.option ==2){
+        for (let channel in log){
+            err_count[channel] =0;
+        }    
+    }else if(conf.option==3 || conf.option ==4){
+        for (let channel in schedule){
+            err_count[channel] =0;
+        }
+    }
+}
+
 let main = () => {
 
     let running_video = {
@@ -623,6 +628,8 @@ let main = () => {
         const log = module_solrtmp_log(running_video, conf);
         const solrtmp_log_channel=channel_match(schedule,log,conf);
         let err_count = {};
+        initialize_err_count(log, schedule, conf, err_count);
+
         setInterval(() => {
             streaming_detect(running_video, err_count, conf, solrtmp_log_channel)
         }, conf.cycle / conf.test);
