@@ -522,6 +522,7 @@ let module_solrtmp_log = (running_video, conf) => {
         let current_time = current_time_finder(conf);
         setInterval(
             () => {
+                let log = parser_solrtmp_log(conf.log);
                 current_time = current_time_synchronizer(current_time, conf.cycle);
                 id_finder_solrtmp_log(log, conf, running_video, current_time);
             }, conf.cycle / conf.test
@@ -589,12 +590,17 @@ let streaming_detect = (running_video, err_count, conf, solrtmp_log_channel) => 
 }
 
 let channel_match = (schedule, log, conf)=>{
-    if (conf.option == 1 || conf.option == 2) {
-        mapping_table = channel_map(schedule, log);
-    }else if (conf.option ==3 || conf.option ==4){
-        for(let property in log ){
-           return property;
+    try{
+        if (conf.option == 1 || conf.option == 2) {
+            mapping_table = channel_map(schedule, log);
+        }else if (conf.option ==3 || conf.option ==4){
+            for(let property in log ){
+               return property;
+            }
         }
+    }catch(err){
+        console.log(err);
+        process.exit(1);
     }
 }
 
