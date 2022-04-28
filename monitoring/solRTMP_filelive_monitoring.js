@@ -168,6 +168,7 @@ let parser_excel = (json, conf, sheet, excel) => {
                             }
                             end_time += conf.ad_duration.pluto;
                             ad.start = time_converter(json[i]['Ad Point ' + k.toString()]) + schedule[i - 2].end_time;
+                            if(k!=1){ad.start+=conf.ad_duration.pluto*(k-1);}
                             ad.end = ad.start + conf.ad_duration.pluto;
                             ad_list.push(ad);
                         }
