@@ -49,7 +49,88 @@ let time_converter = (x) => {
     }
 }
 
-let read_conf = (file_name) => {
+// let read_conf = (file_name) => {
+//     try {
+//         let conf_file = fs.readFileSync(file_name, 'utf8');
+//         conf_file = JSON.parse(conf_file);
+
+//         let conf = {
+//             excel: '',
+//             log: '',
+//             option: 0,
+//             start_date_samsung: '',
+//             start_date_pluto: '',
+//             current_time: '',
+//             error_tolerance: 0,
+//             period: 0,
+//             test: 0,
+
+//             ad_duration: {
+//                 pluto: '',
+//                 samsung_korea: '',
+//                 samsung_northern_america: ''
+//             },
+//             ad_interval: {
+//                 samsung_korea: '',
+//                 samsung_northern_america: ''
+//             },
+//             ad_name: {
+//                 pluto: '',
+//                 samsung_korea: '',
+//                 samsung_northern_america: ''
+//             },
+//             id_prefix:{
+//                 content:'',
+//                 ad:''
+//             }
+//         }
+
+//         conf.excel = conf_file.excel;
+//         conf.log = conf_file.log;
+//         conf.option = conf_file.option;
+//         conf.start_date_samsung = conf_file.start_date_samsung;
+//         conf.start_date_pluto = conf_file.start_date_pluto;
+//         conf.current_time = conf_file.current_time;
+//         conf.error_tolerance = conf_file.error_tolerance;
+//         conf.period = conf_file.period;
+//         conf.test = conf_file.test;
+//         conf.id_prefix.content = conf_file.id_prefix.content;
+//         conf.id_prefix.ad = conf_file.id_prefix.ad;
+
+//         // conf.current_time = fetch_unix_timestamp(conf_file.current_time);
+//         for (let sheet in conf.start_date_samsung) {
+//             conf.start_date_samsung[sheet] = fetch_unix_timestamp(conf.start_date_samsung[sheet]);
+//         }
+//         for (let sheet in conf.start_date_pluto) {
+//             conf.start_date_pluto[sheet] = fetch_unix_timestamp(conf.start_date_pluto[sheet]);
+//         }
+//         conf.ad_duration.pluto = conf_file.ad_duration.pluto;
+//         conf.ad_duration.samsung_korea = conf_file.ad_duration.samsung_korea;
+//         conf.ad_duration.samsung_northern_america = conf_file.ad_duration.samsung_northern_america;
+//         conf.ad_interval.samsung_korea = conf_file.ad_interval.samsung_korea;
+//         conf.ad_interval.samsung_northern_america = conf_file.ad_interval.samsung_northern_america;
+//         conf.ad_name.pluto = conf_file.ad_name.pluto;
+//         conf.ad_name.samsung_korea = conf_file.ad_name.samsung_korea;
+//         conf.ad_name.samsung_northern_america = conf_file.ad_name.samsung_northern_america;
+
+//         if (conf.option < 1 || conf.option > 4 || conf.current_time <= 0 || conf.ad_duration.pluto <= 0 
+//             || conf.ad_duration.samsung_korea <= 0 || conf.ad_duration.samsung_northern_america <= 0 || conf.ad_interval.samsung_korea <= 0
+//             || conf.ad_interval.samsung_northern_america <= 0 || conf.ad_name.pluto.length <= 0 || conf.ad_name.samsung_korea.length <= 0
+//             || conf.ad_name.samsung_northern_america.length <= 0 || !Number.isInteger(conf.error_tolerance) || conf.period <= 0 
+//             || conf.id_prefix.content.length <=0 || conf.id_prefix.ad.length <=0) {
+//             throw new Error();
+//         }
+
+//         return conf;
+//     } catch (err) {
+//         console.log('[error] configure.conf ');
+//         console.log(err);
+//         process.exit(1);
+//     }
+// }
+
+
+let read_conf_samsung = (file_name) => {
     try {
         let conf_file = fs.readFileSync(file_name, 'utf8');
         conf_file = JSON.parse(conf_file);
@@ -59,14 +140,12 @@ let read_conf = (file_name) => {
             log: '',
             option: 0,
             start_date_samsung: '',
-            start_date_pluto: '',
             current_time: '',
             error_tolerance: 0,
-            cycle: 0,
+            period: 0,
             test: 0,
 
             ad_duration: {
-                pluto: '',
                 samsung_korea: '',
                 samsung_northern_america: ''
             },
@@ -75,9 +154,12 @@ let read_conf = (file_name) => {
                 samsung_northern_america: ''
             },
             ad_name: {
-                pluto: '',
                 samsung_korea: '',
                 samsung_northern_america: ''
+            },
+            id_prefix:{
+                content:'',
+                ad:''
             }
         }
 
@@ -85,32 +167,30 @@ let read_conf = (file_name) => {
         conf.log = conf_file.log;
         conf.option = conf_file.option;
         conf.start_date_samsung = conf_file.start_date_samsung;
-        conf.start_date_pluto = conf_file.start_date_pluto;
         conf.current_time = conf_file.current_time;
         conf.error_tolerance = conf_file.error_tolerance;
-        conf.cycle = conf_file.cycle;
+        conf.period = conf_file.period;
         conf.test = conf_file.test;
+        conf.id_prefix.content = conf_file.id_prefix.content;
+        conf.id_prefix.ad = conf_file.id_prefix.ad;
 
         // conf.current_time = fetch_unix_timestamp(conf_file.current_time);
         for (let sheet in conf.start_date_samsung) {
             conf.start_date_samsung[sheet] = fetch_unix_timestamp(conf.start_date_samsung[sheet]);
         }
-        for (let sheet in conf.start_date_pluto) {
-            conf.start_date_pluto[sheet] = fetch_unix_timestamp(conf.start_date_pluto[sheet]);
-        }
-        conf.ad_duration.pluto = conf_file.ad_duration.pluto;
+      
         conf.ad_duration.samsung_korea = conf_file.ad_duration.samsung_korea;
         conf.ad_duration.samsung_northern_america = conf_file.ad_duration.samsung_northern_america;
         conf.ad_interval.samsung_korea = conf_file.ad_interval.samsung_korea;
         conf.ad_interval.samsung_northern_america = conf_file.ad_interval.samsung_northern_america;
-        conf.ad_name.pluto = conf_file.ad_name.pluto;
         conf.ad_name.samsung_korea = conf_file.ad_name.samsung_korea;
         conf.ad_name.samsung_northern_america = conf_file.ad_name.samsung_northern_america;
 
-        if (conf.option < 1 || conf.option > 4 || conf.current_time <= 0 || conf.ad_duration.pluto <= 0
+        if (conf.option < 1 || conf.option > 4 || conf.current_time <= 0  
             || conf.ad_duration.samsung_korea <= 0 || conf.ad_duration.samsung_northern_america <= 0 || conf.ad_interval.samsung_korea <= 0
-            || conf.ad_interval.samsung_northern_america <= 0 || conf.ad_name.pluto.length <= 0 || conf.ad_name.samsung_korea.length <= 0
-            || conf.ad_name.samsung_northern_america.length <= 0 || !Number.isInteger(conf.error_tolerance) || conf.cycle <= 0) {
+            || conf.ad_interval.samsung_northern_america <= 0 || conf.ad_name.samsung_korea.length <= 0
+            || conf.ad_name.samsung_northern_america.length <= 0 || !Number.isInteger(conf.error_tolerance) || conf.period <= 0 
+            || conf.id_prefix.content.length <=0 || conf.id_prefix.ad.length <=0) {
             throw new Error();
         }
 
@@ -121,6 +201,68 @@ let read_conf = (file_name) => {
         process.exit(1);
     }
 }
+
+
+let read_conf_pluto = (file_name) => {
+    try {
+        let conf_file = fs.readFileSync(file_name, 'utf8');
+        conf_file = JSON.parse(conf_file);
+
+        let conf = {
+            excel: '',
+            log: '',
+            option: 0,
+            start_date_pluto: '',
+            current_time: '',
+            error_tolerance: 0,
+            period: 0,
+            test: 0,
+
+            ad_duration: {
+                pluto: '',
+            },
+            ad_name: {
+                pluto: '',
+            },
+            id_prefix:{
+                content:'',
+                ad:''
+            }
+        }
+
+        conf.excel = conf_file.excel;
+        conf.log = conf_file.log;
+        conf.option = conf_file.option;
+        conf.start_date_pluto = conf_file.start_date_pluto;
+        conf.current_time = conf_file.current_time;
+        conf.error_tolerance = conf_file.error_tolerance;
+        conf.period = conf_file.period;
+        conf.test = conf_file.test;
+        conf.id_prefix.content = conf_file.id_prefix.content;
+        conf.id_prefix.ad = conf_file.id_prefix.ad;
+
+        // conf.current_time = fetch_unix_timestamp(conf_file.current_time);
+      
+        for (let sheet in conf.start_date_pluto) {
+            conf.start_date_pluto[sheet] = fetch_unix_timestamp(conf.start_date_pluto[sheet]);
+        }
+        conf.ad_duration.pluto = conf_file.ad_duration.pluto;
+        conf.ad_name.pluto = conf_file.ad_name.pluto;
+
+        if (conf.option < 1 || conf.option > 4 || conf.current_time <= 0 || conf.ad_duration.pluto <= 0 
+            ||  conf.ad_name.pluto.length <= 0 || !Number.isInteger(conf.error_tolerance) || conf.period <= 0 
+            || conf.id_prefix.content.length <=0 || conf.id_prefix.ad.length <=0) {
+            throw new Error();
+        }
+
+        return conf;
+    } catch (err) {
+        console.log('[error] configure.conf ');
+        console.log(err);
+        process.exit(1);
+    }
+}
+
 
 let read_excel = (excel, conf, i) => {
     try {
@@ -370,8 +512,8 @@ let id_finder_solrtmp_log = (log, conf, running_video, current_time) => {
             //last line check
             if (fetch_unix_timestamp(log[channel][log[channel].length - 1].time) <= current_time) {
                 //console.log(channel, log[channel][log[channel].length - 1].video_id);
-                if (conf.option == 3) { running_video.solrtmp_log.pluto[channel] = id_cut(log[channel][log[channel].length - 1].video_id, 3); }
-                if (conf.option == 1 || conf.option == 2) { running_video.solrtmp_log.samsung[channel] = id_cut(log[channel][log[channel].length - 1].video_id, 2); }
+                if (conf.option == 3) { running_video.solrtmp_log.pluto[channel] = id_synchronizer(log[channel][log[channel].length - 1].video_id, conf); }
+                if (conf.option == 1 || conf.option == 2) { running_video.solrtmp_log.samsung[channel] = id_synchronizer(log[channel][log[channel].length - 1].video_id, conf ); }
                 continue;
             }
             //first line check
@@ -382,8 +524,8 @@ let id_finder_solrtmp_log = (log, conf, running_video, current_time) => {
             for (let line = 0; line < log[channel].length - 1; line++) {
                 if ((fetch_unix_timestamp(log[channel][line].time) <= current_time) && (current_time < fetch_unix_timestamp(log[channel][line + 1].time))) {
                     // console.log(channel, log[channel][line].video_id);
-                    if (conf.option == 3) { running_video.solrtmp_log.pluto[channel] = id_cut(log[channel][line].video_id, 3); }
-                    if (conf.option == 1 || conf.option == 2) { running_video.solrtmp_log.samsung[channel] = id_cut(log[channel][line].video_id, 2); }
+                    if (conf.option == 3) { running_video.solrtmp_log.pluto[channel] = id_synchronizer(log[channel][line].video_id, conf ); }
+                    if (conf.option == 1 || conf.option == 2) { running_video.solrtmp_log.samsung[channel] = id_synchronizer(log[channel][line].video_id, conf ); }
                     break;
                 }
             }
@@ -431,9 +573,9 @@ let module_excel = (running_video, conf) => {
             current_time.push(current_time_finder(conf));
             setInterval(
                 () => {
-                    current_time[sheet] = current_time_synchronizer(current_time[sheet], conf.cycle);
+                    current_time[sheet] = current_time_synchronizer(current_time[sheet], conf.period);
                     id_finder_excel(schedule[sheet], conf, sheet, running_video, current_time[sheet], excel);
-                }, conf.cycle / conf.test
+                }, conf.period / conf.test
             )
         }
         return schedule;
@@ -473,13 +615,32 @@ let id_cut = (id, length) => {
     }
 }
 
-let channel_map = (schedule, log) => {
+let id_synchronizer = (id, conf) =>
+{
+    let index;
+    try {
+        if(id.indexOf(conf.id_prefix.content) >= 0){
+            index = id.indexOf(conf.id_prefix.content) + conf.id_prefix.content.length + 1;
+            return id.substr(index);
+        }else if(id.indexOf(conf.id_prefix.ad) >= 0){
+            index = id.indexOf(conf.id_prefix.ad);
+            return id.substr(index);
+        }else{
+            throw new Error('[error] there is no prefix in the id');
+        }    
+    } catch (error) {
+        console.log(error);
+        process.exit(1);
+    }
+}
+
+let channel_map = (schedule, log, conf) => {
     let mapping_table = {};
     let break_loop = 0;
     for (let channel in log) {
         for (let excel_sheet = 0; excel_sheet < schedule.length; excel_sheet++) {
             for (let line = 0; line < schedule[excel_sheet].length; line++) {
-                if (id_cut(log[channel][0].video_id, 2) == schedule[excel_sheet][line].id) {
+                if (id_synchronizer(log[channel][0].video_id, conf) == schedule[excel_sheet][line].id) {
                     mapping_table[excel_sheet] = channel;
                     break_loop = 1;
                     break;
@@ -515,8 +676,8 @@ let current_time_finder = (conf) => {
     }
 }
 
-let current_time_synchronizer = (current_time, cycle) => {
-    current_time += cycle;
+let current_time_synchronizer = (current_time, period) => {
+    current_time += period;
     return current_time;
 }
 
@@ -527,9 +688,9 @@ let module_solrtmp_log = (running_video, conf) => {
         setInterval(
             () => {
                // let log = parser_solrtmp_log(conf);
-                current_time = current_time_synchronizer(current_time, conf.cycle);
+                current_time = current_time_synchronizer(current_time, conf.period);
                 id_finder_solrtmp_log(log, conf, running_video, current_time);
-            }, conf.cycle / conf.test
+            }, conf.period / conf.test
         )
 
         //print_console(log);
@@ -543,7 +704,7 @@ let module_solrtmp_log = (running_video, conf) => {
 
 let streaming_detect = (running_video, err_count, conf, solrtmp_log_channel) => {
     try {
-        let default_error_tolerance = (10000 / conf.cycle) + 1;
+        let default_error_tolerance = (10000 / conf.period) + 1;
         if (conf.option == 1 || conf.option == 2) {
             // detection loop
             for (let channel in running_video.excel.samsung) {
@@ -587,7 +748,7 @@ let streaming_detect = (running_video, err_count, conf, solrtmp_log_channel) => 
 let channel_match = (schedule, log, conf)=>{
     try{
         if (conf.option == 1 || conf.option == 2) {
-            mapping_table = channel_map(schedule, log);
+            mapping_table = channel_map(schedule, log, conf);
         }else if (conf.option ==3 || conf.option ==4){
             for(let property in log ){
                return property;
@@ -625,7 +786,8 @@ let main = () => {
         }
     }
     try {
-        const conf = read_conf('configure.conf');
+        const conf = read_conf_samsung('config_samsung.conf');
+        //const conf = read_conf_pluto('config_pluto.conf');
         const schedule = module_excel(running_video, conf);
         const log = module_solrtmp_log(running_video, conf);
         const solrtmp_log_channel=channel_match(schedule,log,conf);
@@ -634,7 +796,7 @@ let main = () => {
 
         setInterval(() => {
             streaming_detect(running_video, err_count, conf, solrtmp_log_channel)
-        }, conf.cycle / conf.test);
+        }, conf.period / conf.test);
 
     } catch (error) {
         console.log(error);
