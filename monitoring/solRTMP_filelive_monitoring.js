@@ -334,7 +334,7 @@ let parser_solrtmp_log = (conf) => {
 
     let full_log = [];
     full_log = file.split('\n');
-    full_log = full_log.slice(-10000);
+   // full_log = full_log.slice(-10000);
     let log = {}
 
     class line {
@@ -526,8 +526,8 @@ let module_solrtmp_log = (running_video, conf) => {
         let current_time = current_time_finder(conf);
         setInterval(
             () => {
-                let log = parser_solrtmp_log(conf);
-             //   current_time = current_time_synchronizer(current_time, conf.cycle);
+               // let log = parser_solrtmp_log(conf);
+                current_time = current_time_synchronizer(current_time, conf.cycle);
                 id_finder_solrtmp_log(log, conf, running_video, current_time);
             }, conf.cycle / conf.test
         )
@@ -560,15 +560,15 @@ let streaming_detect = (running_video, err_count, conf, solrtmp_log_channel) => 
                     }
                 }
             }
-            //console.log('\n');
+            console.log('\n');
         } else if (conf.option == 3 || conf.option == 4) {
             // detection loop
             for (let channel in running_video.excel.pluto) {
                 if (running_video.excel.pluto[channel] === running_video.solrtmp_log.pluto[solrtmp_log_channel]) {
                     err_count[channel] = 0;
-                    //console.log(running_video.excel.pluto[channel], running_video.solrtmp_log.pluto[solrtmp_log_channel], "success");
+                    console.log(running_video.excel.pluto[channel], running_video.solrtmp_log.pluto[solrtmp_log_channel], "success");
                 } else {
-                   // console.log( running_video.excel.pluto[channel], running_video.solrtmp_log.pluto[solrtmp_log_channel], "error");
+                    console.log( running_video.excel.pluto[channel], running_video.solrtmp_log.pluto[solrtmp_log_channel], "error");
                     err_count[channel]++;
                     //need to fix
                     if (err_count[channel] >= default_error_tolerance + conf.error_tolerance) {
@@ -634,7 +634,6 @@ let main = () => {
 
         setInterval(() => {
             streaming_detect(running_video, err_count, conf, solrtmp_log_channel)
-            //console.log('test');
         }, conf.cycle / conf.test);
 
     } catch (error) {
