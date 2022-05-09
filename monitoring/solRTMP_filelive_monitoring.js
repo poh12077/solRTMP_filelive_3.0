@@ -531,8 +531,22 @@ let id_finder_solrtmp_log = (log, conf, running_video, current_time) => {
                 }
             }
                 if (fetch_unix_timestamp(log[channel][log[channel].length - 1].time) < current_time) {
-                console.log(channel, log[channel][log[channel].length - 1].video_id, "log is done");
-                process.exit(1);
+                if (conf.option == 1 || conf.option == 2){
+                    console.log(channel, log[channel][log[channel].length - 1].video_id, "log is done");
+                    delete running_video.excel.samsung[channel];
+                    if(Object.keys(running_video.excel.samsung).length==0){
+                        process.exit(1);  
+                    }
+                } else if(conf.option==3){
+                    if( solrtmp_log_channel == channel){
+                        console.log(channel, log[channel][log[channel].length - 1].video_id, "log is done");
+                        process.exit(1);    
+                    }
+                    // delete running_video.excel.pluto[channel];
+                    // if(Object.keys(running_video.excel.pluto).length==0){
+                    //     process.exit(1);  
+                    // }
+                }
             }
 
 }
@@ -743,7 +757,7 @@ let streaming_detect = (running_video, err_count, conf, solrtmp_log_channel) => 
                     }
                 }
             }
-            console.log('\n');
+            //console.log('\n');
         } else if (conf.option == 3 || conf.option == 4) {
             // detection loop
             for (let channel in running_video.excel.pluto) {
@@ -808,11 +822,11 @@ let main = () => {
         }
     }
     try {
-        const conf = read_conf_samsung('config_samsung.conf');
-        //const conf = read_conf_pluto('config_pluto.conf');
+        //const conf = read_conf_samsung('config_samsung.conf');
+        const conf = read_conf_pluto('config_pluto.conf');
         const solrtmp = module_solrtmp_log(running_video, conf);
         const schedule = module_excel(running_video, conf, solrtmp.current_time);
-        const solrtmp_log_channel=channel_match(schedule, solrtmp.log, conf);
+        solrtmp_log_channel=channel_match(schedule, solrtmp.log, conf);
         let err_count = {};
         initialize_err_count( solrtmp.log, schedule, conf, err_count);
 
