@@ -510,10 +510,13 @@ let id_finder_solrtmp_log = (log, conf, running_video, current_time) => {
     try {
         for (let channel in log) {
             //last line check
-            if (fetch_unix_timestamp(log[channel][log[channel].length - 1].time) <= current_time) {
+            if (fetch_unix_timestamp(log[channel][log[channel].length - 1].time) == current_time) {
                 //console.log(channel, log[channel][log[channel].length - 1].video_id);
                 if (conf.option == 3) { running_video.solrtmp_log.pluto[channel] = id_synchronizer(log[channel][log[channel].length - 1].video_id, conf); }
-                if (conf.option == 1 || conf.option == 2) { running_video.solrtmp_log.samsung[channel] = id_synchronizer(log[channel][log[channel].length - 1].video_id, conf ); }
+                if (conf.option == 1 || conf.option == 2) { 
+                    running_video.solrtmp_log.samsung[channel] = id_synchronizer(log[channel][log[channel].length - 1].video_id, conf );
+                
+                }
                 continue;
             }
             //first line check
@@ -525,9 +528,16 @@ let id_finder_solrtmp_log = (log, conf, running_video, current_time) => {
                 if ((fetch_unix_timestamp(log[channel][line].time) <= current_time) && (current_time < fetch_unix_timestamp(log[channel][line + 1].time))) {
                     // console.log(channel, log[channel][line].video_id);
                     if (conf.option == 3) { running_video.solrtmp_log.pluto[channel] = id_synchronizer(log[channel][line].video_id, conf ); }
-                    if (conf.option == 1 || conf.option == 2) { running_video.solrtmp_log.samsung[channel] = id_synchronizer(log[channel][line].video_id, conf ); }
+                    if (conf.option == 1 || conf.option == 2) { 
+                        running_video.solrtmp_log.samsung[channel] = id_synchronizer(log[channel][line].video_id, conf ); 
+                    }
                     break;
                 }
+            }
+            
+            if (fetch_unix_timestamp(log[channel][log[channel].length - 1].time) < current_time) {
+                console.log(channel, log[channel][log[channel].length - 1].video_id, "log is done");
+                process.exit(1);
             }
         }
     } catch (error) {
@@ -687,7 +697,7 @@ let module_solrtmp_log = (running_video, conf) => {
         let current_time = current_time_finder(conf);
         setInterval(
             () => {
-               // let log = parser_solrtmp_log(conf);
+                let log = parser_solrtmp_log(conf);
                 current_time = current_time_synchronizer(current_time, conf.period);
                 id_finder_solrtmp_log(log, conf, running_video, current_time);
             }, conf.period / conf.test
@@ -782,7 +792,8 @@ let main = () => {
         },
         solrtmp_log: {
             pluto: {},
-            samsung: {}
+            samsung: {},
+            
         }
     }
     try {
