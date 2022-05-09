@@ -544,10 +544,10 @@ let id_finder_solrtmp_log = (log, conf, running_video, current_time) => {
             }
             if (fetch_unix_timestamp(log[channel][log[channel].length - 1].time) < current_time) {
                 if (conf.option == 1 || conf.option == 2) {
-                  //  console.log(channel, log[channel][log[channel].length - 1].video_id, "log is done");
                     if(channel in running_video.excel.samsung ){
-                        let log_line= channel + " success";
-                        fs.appendFile('monitoring.log', log_line);
+                        console.log(channel, log[channel][log[channel].length - 1].video_id, " done");
+                        let log_line= channel + " success\n";
+                        fs.appendFileSync('monitoring.log', log_line);
                         delete running_video.excel.samsung[channel];
                         running_video.terminated_channel.push(channel);
                         if (Object.keys(running_video.excel.samsung).length == 0) {
@@ -556,7 +556,9 @@ let id_finder_solrtmp_log = (log, conf, running_video, current_time) => {
                     }
                 } else if (conf.option == 3) {
                     if (solrtmp_log_channel == channel) {
-                        console.log(channel, log[channel][log[channel].length - 1].video_id, "log is done");
+                        console.log(channel, log[channel][log[channel].length - 1].video_id, " done");
+                        let log_line= channel + " success\n";
+                        fs.appendFileSync('monitoring.log', log_line);
                         process.exit(1);
                     }
 
@@ -770,7 +772,7 @@ let streaming_detect = (running_video, err_count, conf, solrtmp_log_channel) => 
                     if (err_count[channel] >= default_error_tolerance + conf.error_tolerance) {
                         console.log(channel, running_video.excel.samsung[channel], running_video.solrtmp_log.samsung[channel], "fail");
                         log= channel + ' fail' + '\n';
-                        fs.appendFile('monitoring.log', log );
+                        fs.appendFileSync('monitoring.log', log );
                         err_count[channel] = 0;
                     }
                 }
@@ -841,8 +843,12 @@ let main = () => {
         terminated_channel:[]
     }
     try {
-        const conf = read_conf_samsung('config_samsung.conf');
-        //const conf = read_conf_pluto('config_pluto.conf');
+        //const conf = read_conf_samsung('config_samsung.conf');
+        const conf = read_conf_pluto('config_pluto.conf');
+        if( fs.existsSync('monitoring.log') ){
+            fs.unlinkSync('monitoring.log'); 
+        }
+      
         const solrtmp = module_solrtmp_log(running_video, conf);
         const schedule = module_excel(running_video, conf, solrtmp.current_time);
         solrtmp_log_channel = channel_match(schedule, solrtmp.log, conf);
