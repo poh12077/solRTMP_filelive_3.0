@@ -505,12 +505,13 @@ let parser_solrtmp_log = (conf) => {
     return log;
 }
 
-//current time = '2022-05-04 00:01:34' 
+
+///current time = '2022-05-04 00:01:34'
 let id_finder_solrtmp_log = (log, conf, running_video, current_time) => {
     try {
         for (let channel in log) {
             //last line check
-            if (fetch_unix_timestamp(log[channel][log[channel].length - 1].time) <= current_time) {
+            if (fetch_unix_timestamp(log[channel][log[channel].length - 1].time) == current_time) {
                 //console.log(channel, log[channel][log[channel].length - 1].video_id);
                 if (conf.option == 3) { running_video.solrtmp_log.pluto[channel] = id_synchronizer(log[channel][log[channel].length - 1].video_id, conf); }
                 if (conf.option == 1 || conf.option == 2) { running_video.solrtmp_log.samsung[channel] = id_synchronizer(log[channel][log[channel].length - 1].video_id, conf ); }
@@ -529,7 +530,12 @@ let id_finder_solrtmp_log = (log, conf, running_video, current_time) => {
                     break;
                 }
             }
-        }
+                if (fetch_unix_timestamp(log[channel][log[channel].length - 1].time) < current_time) {
+                console.log(channel, log[channel][log[channel].length - 1].video_id, "log is done");
+                process.exit(1);
+            }
+
+}
     } catch (error) {
         console.log(error);
         process.exit(1);
@@ -555,7 +561,7 @@ let samsung_smartTV = (json) => {
     }
 }
 
-let module_excel = (running_video, conf) => {
+let module_excel = (running_video, conf, time) => {
     try {
         let schedule = [];
         //read whole excel
@@ -570,7 +576,7 @@ let module_excel = (running_video, conf) => {
                 json = samsung_smartTV(json);
             }
             schedule.push(parser_excel(json, conf, sheet, excel));
-            current_time.push(current_time_finder(conf));
+            current_time.push( time );
             setInterval(
                 () => {
                     current_time[sheet] = current_time_synchronizer(current_time[sheet], conf.period);
@@ -677,14 +683,16 @@ let current_time_finder = (conf) => {
 }
 
 let start_time_finder = (log) =>{
-    let start_time=fetch_unix_timestamp('2032-04-05 08:55:21');
+    let start_time=0;
+    //let start_time=fetch_unix_timestamp('2032-04-05 08:55:21');
     for (let channel in log){
-        if(start_time > fetch_unix_timestamp(log[channel][0].time)){
+        if(start_time < fetch_unix_timestamp(log[channel][0].time)){
             start_time = fetch_unix_timestamp(log[channel][0].time);
         }
     }
     return start_time;
 }
+
 
 let current_time_synchronizer = (current_time, period) => {
     current_time += period;
@@ -705,7 +713,11 @@ let module_solrtmp_log = (running_video, conf) => {
 
         //print_console(log);
         //file_write(log, './workspace/test.log');
-        return log;
+        return {
+            log:log,
+            current_time:current_time
+        }
+
     } catch (err) {
         console.log(err);
         process.exit(1);
@@ -798,11 +810,11 @@ let main = () => {
     try {
         const conf = read_conf_samsung('config_samsung.conf');
         //const conf = read_conf_pluto('config_pluto.conf');
-        const schedule = module_excel(running_video, conf);
-        const log = module_solrtmp_log(running_video, conf);
-        const solrtmp_log_channel=channel_match(schedule,log,conf);
+        const solrtmp = module_solrtmp_log(running_video, conf);
+        const schedule = module_excel(running_video, conf, solrtmp.current_time);
+        const solrtmp_log_channel=channel_match(schedule, solrtmp.log, conf);
         let err_count = {};
-        initialize_err_count(log, schedule, conf, err_count);
+        initialize_err_count( solrtmp.log, schedule, conf, err_count);
 
         setInterval(() => {
             streaming_detect(running_video, err_count, conf, solrtmp_log_channel)
