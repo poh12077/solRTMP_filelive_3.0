@@ -676,6 +676,16 @@ let current_time_finder = (conf) => {
     }
 }
 
+let start_time_finder = (log) =>{
+    let start_time=fetch_unix_timestamp('2032-04-05 08:55:21');
+    for (let channel in log){
+        if(start_time > fetch_unix_timestamp(log[channel][0].time)){
+            start_time = fetch_unix_timestamp(log[channel][0].time);
+        }
+    }
+    return start_time;
+}
+
 let current_time_synchronizer = (current_time, period) => {
     current_time += period;
     return current_time;
@@ -684,7 +694,7 @@ let current_time_synchronizer = (current_time, period) => {
 let module_solrtmp_log = (running_video, conf) => {
     try {
         let log = parser_solrtmp_log(conf);
-        let current_time = current_time_finder(conf);
+        let current_time = start_time_finder(log);
         setInterval(
             () => {
                // let log = parser_solrtmp_log(conf);
