@@ -383,12 +383,14 @@ let id_finder_excel = (schedule, conf, channel, running_video, current_time, exc
                             if ((schedule[i + 1].ad_point[k].start <= current_time) && (current_time <= schedule[i + 1].ad_point[k].end)) {
                                 //console.log(new Date(), 'cocos_ad_120s_us is streaming on the', schedule[i + 1].id);
                                 running_video.excel.pluto[channel] = conf.ad_name.pluto;
+                                running_video.excel.time= new Date(current_time);
                                 return "cocos_ad_120s_us";
                             }
                         }
                     }
                     // console.log(new Date(), schedule[i + 1].id);
                     running_video.excel.pluto[channel] = schedule[i + 1].id;
+                    running_video.excel.time= new Date(current_time);
                     return schedule[i + 1].id;
                 }
             }
@@ -400,12 +402,14 @@ let id_finder_excel = (schedule, conf, channel, running_video, current_time, exc
                         if ((schedule[0].ad_point[k].start <= current_time) && (current_time <= schedule[0].ad_point[k].end)) {
                             //  console.log(new Date(), 'cocos_ad_120s_us is streaming on the ', schedule[0].id);
                             running_video.excel.pluto[channel] = conf.ad_name.pluto;
+                            running_video.excel.time= new Date(current_time);
                             return "cocos_ad_120s_us";
                         }
                     }
                 }
                 //console.log(new Date(), schedule[0].id);
                 running_video.excel.pluto[channel] = schedule[0].id;
+                running_video.excel.time= new Date(current_time);
                 return schedule[0].id;
             }
             else if ((current_time < conf.start_date_pluto[sheet_num]) || (schedule[schedule.length - 1].end_time < current_time)) {
@@ -524,7 +528,10 @@ let id_finder_solrtmp_log = (log, conf, running_video, current_time) => {
             //last line check
             if (fetch_unix_timestamp(log[channel][log[channel].length - 1].time) == current_time) {
                 //console.log(channel, log[channel][log[channel].length - 1].video_id);
-                if (conf.option == 3) { running_video.solrtmp_log.pluto[channel] = id_synchronizer(log[channel][log[channel].length - 1].video_id, conf); }
+                if (conf.option == 3) { 
+                    running_video.solrtmp_log.pluto[channel] = id_synchronizer(log[channel][log[channel].length - 1].video_id, conf); 
+                    running_video.solrtmp_log.time = new Date(current_time);
+                }
                 if (conf.option == 1 || conf.option == 2) { running_video.solrtmp_log.samsung[channel] = id_synchronizer(log[channel][log[channel].length - 1].video_id, conf); }
                 continue;
             }
@@ -536,7 +543,10 @@ let id_finder_solrtmp_log = (log, conf, running_video, current_time) => {
             for (let line = 0; line < log[channel].length - 1; line++) {
                 if ((fetch_unix_timestamp(log[channel][line].time) <= current_time) && (current_time < fetch_unix_timestamp(log[channel][line + 1].time))) {
                     // console.log(channel, log[channel][line].video_id);
-                    if (conf.option == 3) { running_video.solrtmp_log.pluto[channel] = id_synchronizer(log[channel][line].video_id, conf); }
+                    if (conf.option == 3) { 
+                        running_video.solrtmp_log.pluto[channel] = id_synchronizer(log[channel][line].video_id, conf); 
+                        running_video.solrtmp_log.time = new Date(current_time);
+                    }
                     if (conf.option == 1 || conf.option == 2) { running_video.solrtmp_log.samsung[channel] = id_synchronizer(log[channel][line].video_id, conf); }
                     break;
                 }
@@ -590,7 +600,7 @@ let samsung_smartTV = (json) => {
     }
 }
 
-let module_excel = (running_video, conf, time) => {
+let module_excel = (running_video, conf, start_time_in_log) => {
     try {
         let schedule = [];
         //read whole excel
@@ -605,7 +615,7 @@ let module_excel = (running_video, conf, time) => {
                 json = samsung_smartTV(json);
             }
             schedule.push(parser_excel(json, conf, sheet, excel));
-            current_time.push(time);
+            current_time.push(start_time_in_log);
             setInterval(
                 () => {
                     current_time[sheet] = current_time_synchronizer(current_time[sheet], conf.period);
@@ -710,7 +720,7 @@ let current_time_finder = (conf) => {
     }
 }
 
-let start_time_finder = (log) => {
+let start_time_finder_in_log = (log) => {
     let start_time = 0;
     //let start_time=fetch_unix_timestamp('2032-04-05 08:55:21');
     for (let channel in log) {
@@ -730,7 +740,7 @@ let current_time_synchronizer = (current_time, period) => {
 let module_solrtmp_log = (running_video, conf) => {
     try {
         let log = parser_solrtmp_log(conf);
-        let current_time = start_time_finder(log);
+        let current_time = start_time_finder_in_log(log);
         setInterval(
             () => {
                 // let log = parser_solrtmp_log(conf);
@@ -789,21 +799,25 @@ let streaming_detect = (running_video, err_count, conf, solrtmp_log_channel) => 
             for (let channel in running_video.excel.pluto) {
                 if (running_video.excel.pluto[channel] === running_video.solrtmp_log.pluto[solrtmp_log_channel]) {
                     err_count[channel] = 0;
-                    debug_log= new Date()+' '+solrtmp_log_channel+' '+running_video.excel.pluto[channel]+' '+running_video.solrtmp_log.pluto[solrtmp_log_channel]+' '+'success';
+                    debug_log= running_video.excel.time+' '+solrtmp_log_channel+' '+running_video.excel.pluto[channel]+'\n';
+                    debug_log+= running_video.solrtmp_log.time+' '+solrtmp_log_channel+' '+running_video.solrtmp_log.pluto[solrtmp_log_channel]+' '+'success';
                     fs.appendFileSync('debug.log', debug_log+'\n' );
-                   // console.log( new Date(), running_video.excel.pluto[channel], running_video.solrtmp_log.pluto[solrtmp_log_channel], "success");
+                    // console.log( new Date(), running_video.excel.pluto[channel], running_video.solrtmp_log.pluto[solrtmp_log_channel], "success");
                 } else {
                     //console.log(new Date(), running_video.excel.pluto[channel], running_video.solrtmp_log.pluto[solrtmp_log_channel], "error");
-                    debug_log= new Date()+' '+solrtmp_log_channel+' '+running_video.excel.pluto[channel]+' '+running_video.solrtmp_log.pluto[solrtmp_log_channel]+' '+'error';                    
+                    debug_log= running_video.excel.time+' '+solrtmp_log_channel+' '+running_video.excel.pluto[channel]+'\n';
+                    debug_log+= running_video.solrtmp_log.time+' '+solrtmp_log_channel+' '+running_video.solrtmp_log.pluto[solrtmp_log_channel]+' '+'error';                   
                     fs.appendFileSync('debug.log', debug_log+'\n' );
                     err_count[channel]++;
                     //need to fix
                     if (err_count[channel] >= default_error_tolerance + conf.error_tolerance) {
-                        noc_log= new Date()+' '+solrtmp_log_channel+' '+running_video.excel.pluto[channel]+' '+running_video.solrtmp_log.pluto[solrtmp_log_channel]+' '+'fail';
+                        noc_log= running_video.excel.time+' '+solrtmp_log_channel+' '+running_video.excel.pluto[channel]+'\n';
+                        noc_log+= running_video.solrtmp_log.time+' '+solrtmp_log_channel+' '+running_video.solrtmp_log.pluto[solrtmp_log_channel]+' '+'fail';   
                         //console.log( noc_log );
                         fs.appendFileSync('NOC.log', noc_log+'\n');
                         fs.appendFileSync('debug.log', noc_log+'\n');
                         err_count[channel] = 0;
+                        //process.exit(1);
                     }
                 }
             }
@@ -847,11 +861,13 @@ let main = () => {
     let running_video = {
         excel: {
             pluto: {},
-            samsung: {}
+            samsung: {},
+            time:''
         },
         solrtmp_log: {
             pluto: {},
-            samsung: {}
+            samsung: {},
+            time:''
         },
         terminated_channel:[]
     }
